@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface ArtistService {
 
-    Artist createArtistInDb(Artist artist);
-
     List<Artist> getAllArtist();
+    String addArtist(Artist artist);
+    List<String> getListOfEmails();
 }

@@ -1,4 +1,6 @@
 package com.splitface.tattoo.validator.validatorImpl;
+import com.splitface.tattoo.exception.NameValidatorException;
+import com.splitface.tattoo.exception.PasswordValidatorException;
 import com.splitface.tattoo.validator.ArtistCheck;
 import java.util.regex.Pattern;
 
@@ -12,25 +14,28 @@ public class ArtistCheckImpl implements ArtistCheck {
     }
 
     @Override
-    public String checkPassword(String password) {
-        if (password.length()<8){
-            return "too short password";
-        }
-        if (!password.matches(".*\\d.*")){
-            return "no numbers in pass";
-        }
+    public boolean checkPassword(String password) {
+
+        if (password.length()<8) throw new PasswordValidatorException("too short password");
+        if (!password.matches(".*\\d.*")) throw new PasswordValidatorException("no numbers in pass");
         Pattern pattern = Pattern.compile ("[!@#$%&*()_+=|<>?{}\\[\\]~-]");
-        if (!pattern.matcher(password).find()){
-            return "no special symbol";
-        }
+        if (!pattern.matcher(password).find()) throw new PasswordValidatorException("no special symbol");
         pattern = Pattern.compile("[a-z]");
-        if (!pattern.matcher(password).find()){
-            return "no lowercase character";
-        }
+        if (!pattern.matcher(password).find()) throw  new PasswordValidatorException("no lowercase character");
         pattern = Pattern.compile("[A-Z]");
-        if (!pattern.matcher(password).find()){
-            return "no uppercase letter";
+        if (!pattern.matcher(password).find()) {
+            throw new PasswordValidatorException("no uppercase letter");
         }
-        return "OK";
+        return true;
     }
+
+    @Override
+    public boolean checkName(String name) {
+        if (name.length()<2)throw new NameValidatorException("too short a name");
+        if (name.isBlank())throw new NameValidatorException("name can`t be blank");
+        return true;
+    }
+
+
+
 }
