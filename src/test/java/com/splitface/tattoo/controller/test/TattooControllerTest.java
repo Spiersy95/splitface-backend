@@ -68,7 +68,7 @@ public class TattooControllerTest {
         when(mockTattooServiceImpl.getAllTattoos()).thenReturn(tattoos);
 
         this.mockMvcController.perform(
-                        MockMvcRequestBuilders.get("/tattoo/"))
+                        MockMvcRequestBuilders.get("/tattoo/tattoos"))
                 .andExpect(MockMvcResultMatchers.status().isFound())
                 .andExpect(MockMvcResultMatchers.jsonPath("$[0].id").value(2L))
                 .andExpect(MockMvcResultMatchers.jsonPath("$[0].design").value("dsfdsf"))
