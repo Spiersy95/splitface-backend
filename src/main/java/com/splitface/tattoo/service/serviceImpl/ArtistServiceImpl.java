@@ -1,5 +1,6 @@
 package com.splitface.tattoo.service.serviceImpl;
 
+import com.splitface.tattoo.exception.ArtistNotFoundException;
 import com.splitface.tattoo.models.Artist;
 import com.splitface.tattoo.repository.ArtistRepository;
 import com.splitface.tattoo.security.PasswordUtils;
@@ -48,8 +49,13 @@ public class ArtistServiceImpl implements ArtistService {
         return "Artist added";
     }
 
-
-
+    @Override
+    public Artist getArtistByEmail(String email) {
+        Artist artist = new Artist();
+        artist = artistRepository.findArtistByEmail(email);
+        if (isNull(artist)) throw new ArtistNotFoundException("incorrect email");
+        return artist;
+    }
 
     /// helpful methods
 

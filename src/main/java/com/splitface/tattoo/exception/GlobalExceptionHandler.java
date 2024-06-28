@@ -21,5 +21,9 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
     }
 
+    public ResponseEntity<Object> handleArtistNotFoundException(ArtistNotFoundException e){
+        return new ResponseEntity<>(e.getMessage(),HttpStatus.NOT_FOUND);
+    }
+
 
 }
