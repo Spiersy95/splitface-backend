@@ -13,7 +13,7 @@ public class GlobalExceptionHandler {
     public ResponseEntity<Object> handleEmptyArtistTableException(EmptyArtistTableException e){
         return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
     }
-
+  
     @ExceptionHandler
     public ResponseEntity<Object> handleEmptyTattooTableException(EmptyTattooTableException e){
         return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
@@ -25,8 +25,6 @@ public class GlobalExceptionHandler {
     @ExceptionHandler
     public ResponseEntity<Object> handleNameValidatorException(NameValidatorException e){
         return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
-
-
 
 
 
