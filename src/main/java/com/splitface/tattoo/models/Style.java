@@ -1,5 +1,6 @@
 package com.splitface.tattoo.models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -33,6 +34,7 @@ public class Style {
     @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JoinTable(name = "style_tattoo_mapping", joinColumns = @JoinColumn(name = "style_id"),
             inverseJoinColumns = @JoinColumn(name = "tattoo_id"))
+    @JsonBackReference
     private List<Tattoo> tattoos;
 
 

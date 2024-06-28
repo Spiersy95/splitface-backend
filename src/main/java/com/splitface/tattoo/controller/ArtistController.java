@@ -16,12 +16,10 @@ import java.util.List;
 @RequestMapping("/artist")
 public class ArtistController {
 
-    private final ArtistService artistService;
-
     @Autowired
-    public ArtistController(ArtistService artistService) {
-        this.artistService = artistService;
-    }
+    ArtistService artistService;
+
+
 
     @Operation(summary ="gets all the tattoo artist accounts in the app",
             description = "Returns a list of all tattoo artist in json format")

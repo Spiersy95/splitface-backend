@@ -41,8 +41,8 @@ public class ArtistControllerTest {
     private ObjectMapper mapper;
 
 
-    Artist scott;
-    Artist jackson;
+    private Artist scott;
+    private Artist jackson;
 
     @BeforeEach
     public void setup(){
