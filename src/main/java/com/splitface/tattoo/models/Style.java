@@ -1,17 +1,34 @@
 package com.splitface.tattoo.models;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.List;
 
 @Entity
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
+@Table
 public class Style {
+
+    public enum StyleEnum {
+        REALISM,
+        WATERCOLOUR,
+        WILDCARD
+    }
 
     @Id
     @GeneratedValue
     private Long id;
+
     @Column(unique = true)
-    private String name;
+    @Enumerated(EnumType.STRING)
+    private StyleEnum styleName;
 
     @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JoinTable(name = "style_tattoo_mapping", joinColumns = @JoinColumn(name = "style_id"),
@@ -27,12 +44,12 @@ public class Style {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public StyleEnum getName() {
+        return styleName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setName(StyleEnum styleName) {
+        this.styleName = styleName;
     }
 
     public List<Tattoo> getTattoos() {
