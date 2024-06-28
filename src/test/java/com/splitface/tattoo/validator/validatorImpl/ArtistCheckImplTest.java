@@ -1,13 +1,18 @@
 package com.splitface.tattoo.validator.validatorImpl;
 
+import com.splitface.tattoo.exception.NameValidatorException;
+import com.splitface.tattoo.exception.PasswordValidatorException;
 import com.splitface.tattoo.validator.ArtistCheck;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class ArtistCheckImplTest {
 
     private ArtistCheck artistCheck;
+
+
     @Test
     void checkEmail() {
         artistCheck = new ArtistCheckImpl();
@@ -25,14 +30,47 @@ class ArtistCheckImplTest {
     @Test
     void checkPassword() {
         artistCheck = new ArtistCheckImpl();
-        String pass = "Fadsf34m6";
-        assertEquals("no special symbol", artistCheck.checkPassword(pass));
-        pass = "asd7zd7&";
-        assertEquals("no uppercase letter", artistCheck.checkPassword(pass));
-        pass = "TYIHGV8746YU&%";
-        assertEquals("no lowercase character", artistCheck.checkPassword(pass));
-        pass = "sfg*^j8hkK";
-        assertEquals("OK", artistCheck.checkPassword(pass));
+        Exception exception = assertThrows(PasswordValidatorException.class,
+                ()-> {artistCheck.checkPassword("Fadsf34m6");
+        });
+        String exMessage = "no special symbol";
+        String actualMessage = exception.getMessage();
+        assertTrue(actualMessage.contains(exMessage));
 
+        exception = assertThrows(PasswordValidatorException.class,
+                ()-> {artistCheck.checkPassword("asd7zd7&f");
+        });
+        exMessage = "no uppercase letter";
+        actualMessage = exception.getMessage();
+        assertTrue(actualMessage.contains(exMessage));
+
+        exception = assertThrows(PasswordValidatorException.class,
+                ()-> {artistCheck.checkPassword("TYIHGV8746YU&%");
+                });
+        exMessage = "no lowercase character";
+        actualMessage = exception.getMessage();
+        assertTrue(actualMessage.contains(exMessage));
+
+        exception = assertThrows(PasswordValidatorException.class,
+                ()-> {artistCheck.checkPassword("afe*YHsdfv");
+                });
+        exMessage = "no numbers in pass";
+        actualMessage = exception.getMessage();
+        assertTrue(actualMessage.contains(exMessage));
+
+        assertTrue(artistCheck.checkPassword("adfd4Kgi&"));
+    }
+
+    @Test
+    void checkName() {
+        artistCheck = new ArtistCheckImpl();
+        Exception exception = assertThrows(NameValidatorException.class,
+                ()-> {artistCheck.checkName("  ");
+                });
+        String exMessage = "name can`t be blank";
+        String actualMessage = exception.getMessage();
+        assertTrue(actualMessage.contains(exMessage));
+
+        assertTrue(artistCheck.checkName("name"));
     }
 }

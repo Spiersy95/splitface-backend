@@ -14,5 +14,12 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
     }
 
+    public ResponseEntity<Object> handlePasswordValidatorException(PasswordValidatorException e){
+        return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+    }
+    public ResponseEntity<Object> handleNameValidatorException(NameValidatorException e){
+        return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+    }
+
 
 }
