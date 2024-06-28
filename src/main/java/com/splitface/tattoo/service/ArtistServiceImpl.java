@@ -12,12 +12,9 @@ import java.util.List;
 @Service
 public class ArtistServiceImpl implements ArtistService {
 
-    private final ArtistRepository artistRepository;
-
     @Autowired
-    public ArtistServiceImpl(ArtistRepository artistRepository) {
-        this.artistRepository = artistRepository;
-    }
+    ArtistRepository artistRepository;
+
 
     @Override
     public Artist createArtistInDb(Artist artist) {

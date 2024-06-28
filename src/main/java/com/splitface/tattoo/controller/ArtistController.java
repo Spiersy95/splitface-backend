@@ -16,16 +16,14 @@ import java.util.List;
 @RequestMapping("/artist")
 public class ArtistController {
 
-    private final ArtistService artistService;
-
     @Autowired
-    public ArtistController(ArtistService artistService) {
-        this.artistService = artistService;
-    }
+    ArtistService artistService;
+
+
 
     @Operation(summary ="gets all the tattoo artist accounts in the app",
             description = "Returns a list of all tattoo artist in json format")
-    @GetMapping("/")
+    @GetMapping("/artists")
     public ResponseEntity<List<Artist>> getAllArtist(){
         List<Artist> artistList = artistService.getAllArtist();
         return new ResponseEntity<List<Artist>>(artistList, HttpStatus.FOUND);

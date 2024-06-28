@@ -41,8 +41,8 @@ public class ArtistControllerTest {
     private ObjectMapper mapper;
 
 
-    Artist scott;
-    Artist jackson;
+    private Artist scott;
+    private Artist jackson;
 
     @BeforeEach
     public void setup(){
@@ -70,7 +70,7 @@ public class ArtistControllerTest {
         when(mockArtistServiceImpl.getAllArtist()).thenReturn(artists);
 
         this.mockMvcController.perform(
-                MockMvcRequestBuilders.get("/artist/"))
+                MockMvcRequestBuilders.get("/artist/artists"))
                 .andExpect(MockMvcResultMatchers.status().isFound())
                 .andExpect(MockMvcResultMatchers.jsonPath("$[0].id").value(1L))
                 .andExpect(MockMvcResultMatchers.jsonPath("$[0].name").value("Scott Stirling"))
