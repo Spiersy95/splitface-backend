@@ -1,8 +1,8 @@
-package com.splitface.tattoo.service.serviceImpl;
+package com.splitface.tattoo.service;
 
+import com.splitface.tattoo.exception.EmptyArtistTableException;
 import com.splitface.tattoo.models.Artist;
 import com.splitface.tattoo.repository.ArtistRepository;
-import com.splitface.tattoo.service.ArtistService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -27,6 +27,9 @@ public class ArtistServiceImpl implements ArtistService {
     public List<Artist> getAllArtist() {
         List<Artist> artistList = new ArrayList<>();
         artistRepository.findAll().forEach(artistList::add);
+        if (artistList.isEmpty()){
+            throw new EmptyArtistTableException("There are no artist");
+        }
         return artistList;
     }
 }
