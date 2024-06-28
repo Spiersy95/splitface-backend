@@ -19,6 +19,7 @@ target/
 *.iml
 *.ipr
 *-rds.properties
+*-prod.properties
 
 
 ### NetBeans ###
