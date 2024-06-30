@@ -23,9 +23,9 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
     }
     @ExceptionHandler
-    public ResponseEntity<Object> handleNameValidatorException(NameValidatorException e){
+    public ResponseEntity<Object> handleNameValidatorException(NameValidatorException e) {
         return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
-
+    }
 
 
 }

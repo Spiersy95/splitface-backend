@@ -1,10 +1,9 @@
-package com.splitface.tattoo.validator.validatorImpl;
+package com.splitface.tattoo.validation.artistValidation;
 
 import com.splitface.tattoo.exception.NameValidatorException;
 import com.splitface.tattoo.exception.PasswordValidatorException;
-import com.splitface.tattoo.validator.ArtistCheck;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -12,10 +11,15 @@ class ArtistCheckImplTest {
 
     private ArtistCheck artistCheck;
 
+    @BeforeEach
+    void setup(){
+        artistCheck = new ArtistCheckImpl();
+
+    }
+
 
     @Test
     void checkEmail() {
-        artistCheck = new ArtistCheckImpl();
         String email = "wagas.sehrh";
         assertFalse(artistCheck.checkEmail(email));
         email = "asdg@sdfg";
@@ -29,7 +33,6 @@ class ArtistCheckImplTest {
 
     @Test
     void checkPassword() {
-        artistCheck = new ArtistCheckImpl();
         Exception exception = assertThrows(PasswordValidatorException.class,
                 ()-> {artistCheck.checkPassword("Fadsf34m6");
         });
@@ -63,7 +66,6 @@ class ArtistCheckImplTest {
 
     @Test
     void checkName() {
-        artistCheck = new ArtistCheckImpl();
         Exception exception = assertThrows(NameValidatorException.class,
                 ()-> {artistCheck.checkName("  ");
                 });
@@ -72,5 +74,26 @@ class ArtistCheckImplTest {
         assertTrue(actualMessage.contains(exMessage));
 
         assertTrue(artistCheck.checkName("name"));
+    }
+
+    @Test
+    void checkPostcode(){
+        String correctInput1 = "G69 6LQ";
+        String correctInput2 = "EX4 6OJ";
+        String correctInput3 =  "DH1 4JS";
+
+        String incorrectInput1 = "GGE LKN";
+        String incorrectInput2 =  "398 130";
+        String incorrectInput3 =  "GP £ 40";
+
+        assertTrue(artistCheck.checkPostcode(correctInput1));
+        assertTrue(artistCheck.checkPostcode(correctInput2));
+        assertTrue(artistCheck.checkPostcode(correctInput3));
+
+        assertFalse(artistCheck.checkPostcode(incorrectInput1));
+        assertFalse(artistCheck.checkPostcode(incorrectInput2));
+        assertFalse(artistCheck.checkPostcode(incorrectInput3));
+
+
     }
 }
