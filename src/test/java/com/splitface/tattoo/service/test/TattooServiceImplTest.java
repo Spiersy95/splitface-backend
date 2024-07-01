@@ -2,7 +2,7 @@ package com.splitface.tattoo.service.test;
 
 
 
-import com.splitface.tattoo.exception.EmptyTattooTableException;
+import com.splitface.tattoo.exception.exceptions.EmptyTattooTableException;
 import com.splitface.tattoo.models.Tattoo;
 
 import com.splitface.tattoo.repository.TattooRepository;
