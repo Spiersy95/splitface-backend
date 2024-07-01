@@ -1,10 +1,6 @@
 package com.splitface.tattoo.controller;
 
-import com.splitface.tattoo.exception.ArtistNotFoundException;
-import com.splitface.tattoo.exception.GlobalExceptionHandler;
-import com.splitface.tattoo.exception.PasswordValidatorException;
 import com.splitface.tattoo.models.Artist;
-import com.splitface.tattoo.service.ArtistService;
 import com.splitface.tattoo.service.serviceImpl.ArtistServiceImpl;
 import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
