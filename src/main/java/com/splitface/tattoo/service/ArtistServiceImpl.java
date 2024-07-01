@@ -60,7 +60,8 @@ public class ArtistServiceImpl implements ArtistService {
         if (artistCheck.checkName(name) &&
                 artistCheck.checkEmail(email) &&
                 !getListOfEmails().contains(email) &&
-                artistCheck.checkPassword(password)){
+                artistCheck.checkPassword(password) &&
+                artistCheck.checkPostcode(location)){
             artistRepository.save(artist);
         }
         return "Artist added";
