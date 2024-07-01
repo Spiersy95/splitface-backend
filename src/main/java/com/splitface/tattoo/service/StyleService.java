@@ -1,0 +1,9 @@
+package com.splitface.tattoo.service;
+
+import com.splitface.tattoo.models.Style;
+
+import java.util.List;
+
+public interface StyleService {
+    List<Style> getAllStylesFromDB();
+}

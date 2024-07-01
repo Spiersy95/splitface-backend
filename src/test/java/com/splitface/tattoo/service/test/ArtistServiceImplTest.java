@@ -1,5 +1,9 @@
 package com.splitface.tattoo.service.test;
 
+//<<<<<<< Scott-Get-Tattoos-By-Style
+//=======
+import com.splitface.tattoo.exception.exceptions.ArtistIdDoesNotExistException;
+//>>>>>>> main
 import com.splitface.tattoo.exception.exceptions.EmptyArtistTableException;
 import com.splitface.tattoo.models.Artist;
 import com.splitface.tattoo.repository.ArtistRepository;
@@ -12,6 +16,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -25,7 +30,7 @@ public class ArtistServiceImplTest {
     ArtistRepository artistRepository;
 
     @InjectMocks
-    ArtistServiceImpl artistServiceimpl;
+    ArtistServiceImpl artistServiceImpl;
 
     Artist scott;
     Artist jackson;
@@ -50,7 +55,7 @@ public class ArtistServiceImplTest {
 
         when(artistRepository.findAll()).thenReturn(artistList);
 
-        assertEquals(artistList, artistServiceimpl.getAllArtist());
+        assertEquals(artistList, artistServiceImpl.getAllArtist());
     }
 
     @Test
@@ -59,7 +64,23 @@ public class ArtistServiceImplTest {
 
         when(artistRepository.findAll()).thenReturn(artistList);
 
-        assertThrows( EmptyArtistTableException.class,() -> artistServiceimpl.getAllArtist());
+        assertThrows(EmptyArtistTableException.class,() -> artistServiceImpl.getAllArtist());
+    }
+
+    @Test
+    public void getArtistByIdNonEmpty(){
+        when(artistRepository.findById(1L)).thenReturn(Optional.ofNullable(scott));
+        when(artistRepository.findById(4L)).thenReturn(Optional.ofNullable(jackson));
+
+        assertEquals(scott, artistServiceImpl.getArtistById(1L));
+        assertEquals(jackson, artistServiceImpl.getArtistById(4L));
+    }
+
+    @Test
+    public void getArtistByIdEmpty(){
+        when(artistRepository.findById(2L)).thenReturn(Optional.empty());
+
+        assertThrows(ArtistIdDoesNotExistException.class, () -> artistServiceImpl.getArtistById(2L));
     }
 
 }

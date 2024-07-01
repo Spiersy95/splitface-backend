@@ -84,6 +84,32 @@ public class ArtistControllerTest {
 
     }
 
+    @Test
+    @DisplayName("GET artist by ID from artistTable")
+    void getArtistByIdTest() throws Exception {
+
+
+        when(mockArtistServiceImpl.getArtistById(1)).thenReturn(scott);
+        when(mockArtistServiceImpl.getArtistById(4L)).thenReturn(jackson);
+
+        this.mockMvcController.perform(
+                MockMvcRequestBuilders.get("/artist/1"))
+                .andExpect(MockMvcResultMatchers.status().isFound())
+                .andExpect(MockMvcResultMatchers.jsonPath("$.id").value(1L))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.name").value("Scott Stirling"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.location").value("location"));
+        this.mockMvcController.perform(
+                MockMvcRequestBuilders.get("/artist/4"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.id").value(4L))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.name").value("Jackson"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.location").value("location"));
+
+
+
+
+    }
+
+
 
 
 }

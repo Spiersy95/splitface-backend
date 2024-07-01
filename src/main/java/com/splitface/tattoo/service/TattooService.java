@@ -10,4 +10,7 @@ public interface TattooService {
 
     List<Tattoo> getAllTattoos();
     List<Tattoo> getTattoosByStyleId(Long id);
+
+    List<Tattoo> getTattoosByArtist(Long artistId);
+    Tattoo addTattooInDb(Tattoo tattoo, Long artistId);
 }

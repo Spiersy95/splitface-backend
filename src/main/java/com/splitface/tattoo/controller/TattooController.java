@@ -1,15 +1,14 @@
 package com.splitface.tattoo.controller;
 
+import com.splitface.tattoo.models.Artist;
 import com.splitface.tattoo.models.Tattoo;
+import com.splitface.tattoo.service.ArtistService;
 import com.splitface.tattoo.service.TattooService;
 import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -19,6 +18,8 @@ public class TattooController {
 
     @Autowired
     TattooService tattooService;
+    @Autowired
+    ArtistService artistService;
 
     @Operation(summary ="gets all the tattoos in the app",
             description = "Returns a list of all tattoos in json format")
@@ -32,6 +33,13 @@ public class TattooController {
     ResponseEntity<List<Tattoo>> getTattoosByStyleId(@PathVariable Long id){
         List<Tattoo> tattoos = tattooService.getTattoosByStyleId(id);
         return new ResponseEntity<>(tattoos, HttpStatus.FOUND);
+    }
+
+
+    @PostMapping("/artist")
+    public ResponseEntity<Tattoo> addTattooForArtistInDB(@RequestBody Tattoo tattoo,
+                                                         @RequestParam (name = "id") Long artistId){
+        return new ResponseEntity<>(tattooService.addTattooInDb(tattoo,artistId),HttpStatus.OK);
     }
 
 }
