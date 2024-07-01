@@ -1,8 +1,7 @@
 package com.splitface.tattoo.service;
 
-import com.splitface.tattoo.exception.EmptyArtistTableException;
-import com.splitface.tattoo.exception.EmptyTattooTableException;
-import com.splitface.tattoo.models.Artist;
+import com.splitface.tattoo.exception.exceptions.EmptyTattooTableException;
+import com.splitface.tattoo.exception.exceptions.TattooMatchingStyleIdException;
 import com.splitface.tattoo.models.Tattoo;
 import com.splitface.tattoo.repository.TattooRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,4 +25,16 @@ public class TattooServiceImpl implements TattooService {
         }
         return tattooList;
     }
+
+    @Override
+    public List<Tattoo> getTattoosByStyleId(Long id) {
+        List<Tattoo> tattooList = new ArrayList<>();
+        tattooRepository.getTattoosByStyleId(id).forEach(tattooList::add);
+        if (tattooList.isEmpty()){
+            throw new TattooMatchingStyleIdException("There are no tattoos matching that style in the database");
+        }
+        return tattooList;
+    }
+
+
 }

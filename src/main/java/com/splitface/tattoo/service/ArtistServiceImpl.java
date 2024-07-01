@@ -1,6 +1,6 @@
 package com.splitface.tattoo.service;
 
-import com.splitface.tattoo.exception.EmptyArtistTableException;
+import com.splitface.tattoo.exception.exceptions.EmptyArtistTableException;
 import com.splitface.tattoo.models.Artist;
 import com.splitface.tattoo.repository.ArtistRepository;
 import org.springframework.beans.factory.annotation.Autowired;

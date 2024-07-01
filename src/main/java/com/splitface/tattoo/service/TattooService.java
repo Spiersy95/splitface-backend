@@ -9,4 +9,5 @@ import java.util.List;
 public interface TattooService {
 
     List<Tattoo> getAllTattoos();
+    List<Tattoo> getTattoosByStyleId(Long id);
 }
