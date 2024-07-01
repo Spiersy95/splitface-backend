@@ -10,6 +10,5 @@ public interface ArtistRepository extends CrudRepository<Artist, Long> {
 
     @Query(value = "SELECT email FROM artist", nativeQuery = true)
     List<String> getAllEmails();
-
     Artist findArtistByEmail(String email);
 }

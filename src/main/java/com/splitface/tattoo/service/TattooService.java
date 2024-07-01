@@ -9,4 +9,7 @@ import java.util.List;
 public interface TattooService {
 
     List<Tattoo> getAllTattoos();
+
+    List<Tattoo> getTattoosByArtist(Long artistId);
+    Tattoo addTattooInDb(Tattoo tattoo, Long artistId);
 }
