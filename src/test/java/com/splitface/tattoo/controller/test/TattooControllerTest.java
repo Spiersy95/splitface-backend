@@ -4,7 +4,11 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import com.splitface.tattoo.controller.TattooController;
 
+//<<<<<<< Scott-Get-Tattoos-By-Style
+import com.splitface.tattoo.models.Style;
+//=======
 import com.splitface.tattoo.models.Artist;
+//>>>>>>> main
 import com.splitface.tattoo.models.Tattoo;
 import com.splitface.tattoo.service.TattooServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
@@ -72,6 +76,7 @@ public class TattooControllerTest {
         tattoos.add(tattoo1);
         tattoos.add(tattoo2);
 
+
         when(mockTattooServiceImpl.getAllTattoos()).thenReturn(tattoos);
 
         this.mockMvcController.perform(
@@ -86,6 +91,28 @@ public class TattooControllerTest {
 
     }
 
+//<<<<<<< Scott-Get-Tattoos-By-Style
+    @Test
+    void getTattoosByStyle() throws Exception {
+
+        List<Tattoo> tattoos = new ArrayList<>();
+        tattoos.add(tattoo1);
+        tattoos.add(tattoo2);
+
+        when(mockTattooServiceImpl.getTattoosByStyleId(1L)).thenReturn(tattoos);
+
+        this.mockMvcController.perform(
+                        MockMvcRequestBuilders.get("/tattoo/tattoos/style/1"))
+                .andExpect(MockMvcResultMatchers.status().isFound())
+                .andExpect(MockMvcResultMatchers.jsonPath("$[0].id").value(2L))
+                .andExpect(MockMvcResultMatchers.jsonPath("$[0].design").value("dsfdsf"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$[0].price").value("£50"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$[1].id").value(6L))
+                .andExpect(MockMvcResultMatchers.jsonPath("$[1].design").value("7"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$[1].price").value("£50"));
+
+
+//=======
 
     @Test
     void createTattooRecord() throws Exception{
@@ -105,5 +132,6 @@ public class TattooControllerTest {
                 .andExpect(MockMvcResultMatchers.jsonPath("$.design").value("dsfdsf"))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.price").value("£50"))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.artist.id").value(4L));
+//>>>>>>> main
     }
 }

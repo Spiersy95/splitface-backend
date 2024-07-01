@@ -1,5 +1,8 @@
 package com.splitface.tattoo.service;
 
+import com.splitface.tattoo.exception.exceptions.EmptyTattooTableException;
+import com.splitface.tattoo.exception.exceptions.TattooMatchingStyleIdException;
+
 import com.splitface.tattoo.exception.exceptions.ArtistIdDoesNotExistException;
 import com.splitface.tattoo.exception.exceptions.EmptyTattooTableException;
 import com.splitface.tattoo.models.Artist;
@@ -31,6 +34,19 @@ public class TattooServiceImpl implements TattooService {
         return tattooList;
     }
 
+//=======
+    @Override
+    public List<Tattoo> getTattoosByStyleId(Long id) {
+        List<Tattoo> tattooList = new ArrayList<>();
+        tattooRepository.getTattoosByStyleId(id).forEach(tattooList::add);
+        if (tattooList.isEmpty()){
+            throw new TattooMatchingStyleIdException("There are no tattoos matching that style in the database");
+        }
+        return tattooList;
+    }
+
+
+//=======
 
     @Override
     public List<Tattoo> getTattoosByArtist(Long artistId) {
@@ -57,4 +73,5 @@ public class TattooServiceImpl implements TattooService {
             return tattoo;
         }else return null;
     }
+//>>>>>>> main
 }
