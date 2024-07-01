@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -26,7 +27,13 @@ public class ArtistController {
     @GetMapping("/artists")
     public ResponseEntity<List<Artist>> getAllArtist(){
         List<Artist> artistList = artistService.getAllArtist();
-        return new ResponseEntity<List<Artist>>(artistList, HttpStatus.FOUND);
+        return new ResponseEntity<>(artistList, HttpStatus.FOUND);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<Artist> getArtistById(@PathVariable Long id){
+        Artist artist = artistService.getArtistById(id);
+        return new ResponseEntity<>(artist, HttpStatus.FOUND);
     }
 
 

@@ -8,4 +8,5 @@ public interface ArtistService {
 
     List<Artist> getAllArtist();
     Artist createArtistInDb(Artist artist);
+    Artist getArtistById(long id);
 }
