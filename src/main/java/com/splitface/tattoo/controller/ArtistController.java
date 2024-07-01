@@ -6,10 +6,9 @@ import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
@@ -34,6 +33,25 @@ public class ArtistController {
     public ResponseEntity<Artist> getArtistById(@PathVariable Long id){
         Artist artist = artistService.getArtistById(id);
         return new ResponseEntity<>(artist, HttpStatus.FOUND);
+    }
+
+
+
+    @PostMapping
+    public ResponseEntity<String> addArtist(@RequestBody Artist artist){
+        artistService.addArtist(artist);
+        return new ResponseEntity<>("have ben added ", HttpStatus.CREATED);
+    }
+
+
+    @GetMapping
+    public ResponseEntity<Artist> passwordMatchWithEmail(@RequestParam("email") String email,
+                                                         @RequestParam("password") String password){
+        Artist artist = artistService.getArtistByEmail(email);
+        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+        if (encoder.matches(password, artist.getPassword())){
+            return new ResponseEntity<>(artist,HttpStatus.ACCEPTED);
+        }else throw new ResponseStatusException(HttpStatus.NOT_FOUND,"Cant be found");
     }
 
 
