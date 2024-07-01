@@ -20,7 +20,7 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @SpringBootTest
 public class TattooServiceImplTest {
@@ -52,6 +52,7 @@ public class TattooServiceImplTest {
         when(tattooRepository.findAll()).thenReturn(tattooList);
 
         assertEquals(tattooList, tattooServiceimpl.getAllTattoos());
+        verify(tattooRepository, times(1)).findAll();
     }
 
     @Test
@@ -61,5 +62,20 @@ public class TattooServiceImplTest {
         when(tattooRepository.findAll()).thenReturn(tattooList);
 
         assertThrows( EmptyTattooTableException.class,() -> tattooServiceimpl.getAllTattoos());
+        verify(tattooRepository, times(1)).findAll();
     }
+
+    @Test
+    public void getTattoosByStyleIdTestNonEmpty(){
+        List<Tattoo> tattoosList = new ArrayList();
+        tattoosList.add(tattoo1);
+
+        when(tattooRepository.getTattoosByStyleId(1L)).thenReturn(tattoosList);
+
+
+        assertEquals(tattoosList, tattooServiceimpl.getTattoosByStyleId(1L));
+        verify(tattooRepository, times(1)).getTattoosByStyleId(1L);
+
+    }
+
 }

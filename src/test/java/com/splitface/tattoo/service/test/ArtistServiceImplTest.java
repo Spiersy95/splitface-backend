@@ -1,6 +1,9 @@
 package com.splitface.tattoo.service.test;
 
+//<<<<<<< Scott-Get-Tattoos-By-Style
+//=======
 import com.splitface.tattoo.exception.exceptions.ArtistIdDoesNotExistException;
+//>>>>>>> main
 import com.splitface.tattoo.exception.exceptions.EmptyArtistTableException;
 import com.splitface.tattoo.models.Artist;
 import com.splitface.tattoo.repository.ArtistRepository;

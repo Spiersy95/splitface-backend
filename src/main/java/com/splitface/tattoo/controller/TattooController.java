@@ -29,6 +29,11 @@ public class TattooController {
         return new ResponseEntity<>(tattoos, HttpStatus.FOUND);
     }
 
+    @GetMapping("/tattoos/style/{id}")
+    ResponseEntity<List<Tattoo>> getTattoosByStyleId(@PathVariable Long id){
+        List<Tattoo> tattoos = tattooService.getTattoosByStyleId(id);
+        return new ResponseEntity<>(tattoos, HttpStatus.FOUND);
+    }
 
 
     @PostMapping("/artist")
