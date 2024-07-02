@@ -1,6 +1,5 @@
 package com.splitface.tattoo.controller;
 
-import com.splitface.tattoo.models.Artist;
 import com.splitface.tattoo.models.Tattoo;
 import com.splitface.tattoo.service.ArtistService;
 import com.splitface.tattoo.service.TattooService;
