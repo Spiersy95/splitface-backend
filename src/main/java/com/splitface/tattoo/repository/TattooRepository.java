@@ -9,6 +9,7 @@ import java.util.List;
 
 public interface TattooRepository extends CrudRepository<Tattoo, Long> {
 
+
     @Query(value = """
         SELECT tattoo.id, tattoo.design, tattoo.price, tattoo.artist_id\s
         FROM tattoo
@@ -16,7 +17,9 @@ public interface TattooRepository extends CrudRepository<Tattoo, Long> {
         INNER JOIN style ON style.id = stm.style_id
         WHERE style.id = :val
        \s""", nativeQuery = true)
+
     Iterable<Tattoo> getTattoosByStyleId(@Param("val") long id);
+  
     @Query(value = "SELECT * FROM tattoo WHERE arist_id=:artistId", nativeQuery = true)
     List<Tattoo> getTattoosByArtistId( @Param("artistId") Long artistId);
 
