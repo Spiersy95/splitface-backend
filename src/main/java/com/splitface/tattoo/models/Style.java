@@ -27,7 +27,6 @@ public class Style {
 
     @Column(unique = true)
     private String styleName;
-    private String nrOfHours;
 
     @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JoinTable(name = "style_tattoo_mapping", joinColumns = @JoinColumn(name = "style_id"),

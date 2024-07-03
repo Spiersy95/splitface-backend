@@ -1,6 +1,7 @@
 package com.splitface.tattoo.models;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -27,7 +28,7 @@ public class Artist {
     private String password;
 
     @OneToMany(mappedBy = "artist", fetch = FetchType.LAZY)
-    //@JsonBackReference
+    @JsonManagedReference
     private List<Tattoo> tattoos;
 
     public Long getId() {
