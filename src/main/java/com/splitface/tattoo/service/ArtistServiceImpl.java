@@ -63,8 +63,8 @@ public class ArtistServiceImpl implements ArtistService {
                 artistCheck.checkPassword(password) &&
                 artistCheck.checkPostcode(location)){
             artistRepository.save(artist);
-        }
-        return "Artist added";
+            return "artist added";
+        }else throw new RuntimeException("Something is wrong");
     }
 
 
