@@ -1,9 +1,7 @@
 package com.splitface.tattoo.service;
 
-import com.splitface.tattoo.exception.exceptions.EmptyTattooTableException;
-import com.splitface.tattoo.exception.exceptions.TattooMatchingStyleIdException;
+import com.splitface.tattoo.exception.exceptions.*;
 
-import com.splitface.tattoo.exception.exceptions.ArtistIdDoesNotExistException;
 import com.splitface.tattoo.exception.exceptions.EmptyTattooTableException;
 import com.splitface.tattoo.models.Artist;
 import com.splitface.tattoo.models.Style;
@@ -15,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class TattooServiceImpl implements TattooService {
@@ -34,7 +33,6 @@ public class TattooServiceImpl implements TattooService {
         return tattooList;
     }
 
-//=======
     @Override
     public List<Tattoo> getTattoosByStyleId(Long id) {
         List<Tattoo> tattooList = new ArrayList<>();
@@ -45,8 +43,6 @@ public class TattooServiceImpl implements TattooService {
         return tattooList;
     }
 
-
-//=======
 
     @Override
     public List<Tattoo> getTattoosByArtist(Long artistId) {
@@ -73,5 +69,13 @@ public class TattooServiceImpl implements TattooService {
             return tattoo;
         }else return null;
     }
-//>>>>>>> main
+
+    public void deleteTattooById(Long id){
+        Optional<Tattoo> tattoo = tattooRepository.findById(id);
+        if (tattoo.isEmpty()){
+            throw new TattooIdDoesNotExistException("Tattoo id does not exist in database");
+        }
+        tattooRepository.delete(tattoo.get());
+    }
+
 }

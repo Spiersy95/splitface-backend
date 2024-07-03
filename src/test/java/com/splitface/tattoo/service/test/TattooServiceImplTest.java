@@ -3,6 +3,7 @@ package com.splitface.tattoo.service.test;
 
 
 import com.splitface.tattoo.exception.exceptions.EmptyTattooTableException;
+import com.splitface.tattoo.exception.exceptions.TattooIdDoesNotExistException;
 import com.splitface.tattoo.models.Tattoo;
 
 import com.splitface.tattoo.repository.TattooRepository;
@@ -17,6 +18,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -75,6 +77,23 @@ public class TattooServiceImplTest {
 
         assertEquals(tattoosList, tattooServiceimpl.getTattoosByStyleId(1L));
         verify(tattooRepository, times(1)).getTattoosByStyleId(1L);
+
+    }
+
+    @Test
+    void deleteTattoosById(){
+        Optional<Tattoo> empty = Optional.empty();
+
+        when(tattooRepository.findById(2L)).thenReturn(Optional.ofNullable(tattoo1));
+        when(tattooRepository.findById(6L)).thenReturn(Optional.ofNullable(tattoo2));
+        when(tattooRepository.findById(1L)).thenReturn(empty);
+
+        tattooServiceimpl.deleteTattooById(2L);
+        tattooServiceimpl.deleteTattooById(6L);
+
+        assertThrows(TattooIdDoesNotExistException.class, () -> tattooServiceimpl.deleteTattooById(1L));
+        verify(tattooRepository, times(1)).delete(tattoo1);
+        verify(tattooRepository, times(1)).delete(tattoo2);
 
     }
 
