@@ -36,9 +36,10 @@ public class TattooController {
 
 
     @PostMapping("/artist")
-    public ResponseEntity<Tattoo> addTattooForArtistInDB(@RequestBody Tattoo tattoo,
+    public ResponseEntity<String> addTattooForArtistInDB(@RequestBody Tattoo tattoo,
                                                          @RequestParam (name = "id") Long artistId){
-        return new ResponseEntity<>(tattooService.addTattooInDb(tattoo,artistId),HttpStatus.OK);
+        tattooService.addTattooInDb(tattoo,artistId);
+        return new ResponseEntity<>("tattoo added",HttpStatus.CREATED);
     }
 
     @GetMapping("/artist")

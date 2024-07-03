@@ -2,6 +2,7 @@ package com.splitface.tattoo.models;
 
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -26,13 +27,14 @@ public class Tattoo {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "artist_id")
-    @JsonBackReference
+    //@JsonBackReference
+    @JsonIgnore
     private Artist artist;
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "style_tattoo_mapping", joinColumns = @JoinColumn(name = "tattoo_id"),
             inverseJoinColumns = @JoinColumn(name = "style_id"))
-    @JsonBackReference
+   // @JsonBackReference
     private List<Style> styles;
 
     public Long getId() {

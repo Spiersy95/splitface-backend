@@ -13,5 +13,7 @@ public interface ArtistService {
     String addArtist(Artist artist);
     List<String> getListOfEmails();
     Artist getArtistByEmail(String email);
+    Artist editArtist(Long artistId, Artist newArtist);
     void deleteArtistById(Long id);
+
 }

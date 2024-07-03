@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import com.splitface.tattoo.controller.TattooController;
 
+
 import com.splitface.tattoo.models.Style;
 import com.splitface.tattoo.models.Artist;
 import com.splitface.tattoo.models.Tattoo;
@@ -27,11 +28,19 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import java.util.ArrayList;
 import java.util.List;
 
+
+import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+
+
 import static org.hamcrest.Matchers.notNullValue;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
 
 @AutoConfigureMockMvc
 @SpringBootTest
@@ -47,6 +56,7 @@ public class TattooControllerTest {
     @Autowired
     private MockMvc mockMvcController;
 
+    @Autowired
     private ObjectMapper mapper;
 
 
@@ -112,6 +122,16 @@ public class TattooControllerTest {
     }
 
     @Test
+    void addTattooForArtistController()throws Exception{
+        this.mockMvcController.perform(post("/tattoo/artist?id=4")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(mapper.writeValueAsString(tattoo1)))
+                .andExpect(status().isCreated())
+                .andExpect(content().string("tattoo added"))
+                .andDo(print());
+    }
+    
+      
     void createTattooRecord() throws Exception{
 
         Artist artist = new Artist(4L,"name","location","email","password",null);
@@ -147,6 +167,5 @@ public class TattooControllerTest {
         assertEquals(expectedString, content);
 
         verify(mockTattooServiceImpl, times(1)).deleteTattooById(2L);
-
     }
 }

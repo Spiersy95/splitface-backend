@@ -43,9 +43,20 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler
+    public ResponseEntity<Object> handlePostcodeValidatorException(PostcodeValidatorException e){
+        return new ResponseEntity<>(e.getMessage(),HttpStatus.NOT_ACCEPTABLE);
+    }
+
+    @ExceptionHandler
+    public ResponseEntity<Object> handleEmailValidatorException(EmailValidatorException e){
+        return new ResponseEntity<>(e.getMessage(),HttpStatus.NOT_ACCEPTABLE);
+    }
+
+    @ExceptionHandler
     public ResponseEntity<Object> handleTattooIdDoesNotExistException(TattooIdDoesNotExistException e){
         return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
     }
+
 
 
 }

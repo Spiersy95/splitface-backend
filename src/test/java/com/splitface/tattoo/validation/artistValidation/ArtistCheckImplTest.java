@@ -28,7 +28,6 @@ class ArtistCheckImplTest {
         assertFalse(artistCheck.checkEmail(email));
         email="agasdg@sdfh.sd";
         assertTrue(artistCheck.checkEmail(email));
-
     }
 
     @Test
