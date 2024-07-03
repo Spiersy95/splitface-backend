@@ -13,4 +13,5 @@ public interface TattooService {
 
     List<Tattoo> getTattoosByArtist(Long artistId);
     Tattoo addTattooInDb(Tattoo tattoo, Long artistId);
+    void deleteTattooById(Long id);
 }
