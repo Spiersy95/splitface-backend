@@ -5,6 +5,7 @@ package com.splitface.tattoo.service.test;
 import com.splitface.tattoo.exception.exceptions.ArtistIdDoesNotExistException;
 //>>>>>>> main
 import com.splitface.tattoo.exception.exceptions.EmptyArtistTableException;
+import com.splitface.tattoo.exception.exceptions.PasswordValidatorException;
 import com.splitface.tattoo.models.Artist;
 import com.splitface.tattoo.repository.ArtistRepository;
 import com.splitface.tattoo.service.ArtistServiceImpl;
@@ -20,6 +21,7 @@ import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.when;
 
 @SpringBootTest
@@ -79,8 +81,21 @@ public class ArtistServiceImplTest {
     @Test
     public void getArtistByIdEmpty(){
         when(artistRepository.findById(2L)).thenReturn(Optional.empty());
-
         assertThrows(ArtistIdDoesNotExistException.class, () -> artistServiceImpl.getArtistById(2L));
+    }
+
+
+    @Test
+    public void editArtist(){
+        when(artistRepository.findById(anyLong())).thenReturn(Optional.ofNullable(scott));
+        Artist artist = new Artist();
+        artist.setLocation("BL3 3QY");
+        scott.setLocation("BL3 3QY");
+        assertEquals(scott.getLocation(),artistServiceImpl.editArtist(1L,artist).getLocation());
+        artist.setPassword("12345");
+        Artist artist1 = new Artist();
+        artist1.setPassword("1234567");
+        assertThrows(PasswordValidatorException.class, ()->artistServiceImpl.editArtist(1L,artist1));
     }
 
 }

@@ -1,7 +1,6 @@
 package com.splitface.tattoo.service;
 
-import com.splitface.tattoo.exception.exceptions.ArtistIdDoesNotExistException;
-import com.splitface.tattoo.exception.exceptions.EmptyArtistTableException;
+import com.splitface.tattoo.exception.exceptions.*;
 import com.splitface.tattoo.models.Artist;
 import com.splitface.tattoo.repository.ArtistRepository;
 import com.splitface.tattoo.security.PasswordUtils;
@@ -68,7 +67,6 @@ public class ArtistServiceImpl implements ArtistService {
     }
 
 
-
     @Override
     public Artist getArtistByEmail(String email) {
         Artist artist = new Artist();
@@ -77,6 +75,48 @@ public class ArtistServiceImpl implements ArtistService {
         return artist;
     }
 
+    @Override
+    public Artist editArtist(Long artistId, Artist newArtist) {
+        Artist artistFromDb = artistRepository.findById(artistId)
+                .orElseThrow(()->new ArtistIdDoesNotExistException("no artist with such id"));
+        newArtist.setId(artistFromDb.getId());
+        newArtist.setTattoos(artistFromDb.getTattoos());
+
+        if (isNull(newArtist.getName())){
+            newArtist.setName(artistFromDb.getName());
+        } else if (!artistCheck.checkName(newArtist.getName())) {
+            throw new NameValidatorException("something wrong with name");
+        }
+
+        if (isNull(newArtist.getLocation())){
+            newArtist.setLocation(artistFromDb.getLocation());
+        } else if (!artistCheck.checkPostcode(newArtist.getLocation())) {
+                System.out.println(newArtist.getLocation());
+                throw new PostcodeValidatorException("PostCode validator in action");
+            }
+
+
+
+        if (isNull(newArtist.getEmail())){
+            newArtist.setEmail(artistFromDb.getEmail());
+            System.out.println("in if");
+        } else if (!artistCheck.checkEmail(newArtist.getEmail()) || getListOfEmails().contains(newArtist.getEmail())) {
+            System.out.println("in else");
+            throw new EmailValidatorException("Something wrong with email");
+        }
+
+        if (isNull(newArtist.getPassword())){
+            newArtist.setPassword(artistFromDb.getPassword());
+        } else if (artistCheck.checkPassword(newArtist.getPassword())) {
+            PasswordUtils passwordUtils = new PasswordUtils();
+            newArtist.setPassword(passwordUtils.hashPassword(newArtist.getPassword()));
+        }else
+            {
+                throw new PasswordValidatorException("password validator in action");
+            }
+        artistRepository.save(newArtist);
+        return newArtist;
+    }
 
     /// helpful methods
 

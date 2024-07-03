@@ -42,7 +42,6 @@ public class StyleServiceImpl implements StyleService{
             }
             styleList.add(style);
         }
-
         tattoo.setStyles(styleList);
         tattooRepository.save(tattoo);
     }

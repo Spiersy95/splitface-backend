@@ -12,6 +12,8 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
+import static java.util.Objects.isNull;
+
 @RestController
 @RequestMapping("/artist")
 public class ArtistController {
@@ -55,6 +57,11 @@ public class ArtistController {
         }else throw new ResponseStatusException(HttpStatus.NOT_FOUND,"Cant be found");
     }
 
+    @PutMapping
+    public ResponseEntity<Artist> editArtistDetails(@RequestParam(name = "id") Long artistId, @RequestBody Artist newArtist){
+        artistService.editArtist(artistId, newArtist);
+        return new ResponseEntity<>(artistService.getArtistById(artistId),HttpStatus.OK);
+    }
 
 
 
