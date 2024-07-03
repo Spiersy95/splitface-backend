@@ -47,4 +47,10 @@ public class TattooController {
         return new ResponseEntity<>(tattooService.getTattoosByArtist(artistId),HttpStatus.OK);
     }
 
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> deleteTattooById(@PathVariable("id") Long id){
+        tattooService.deleteTattooById(id);
+        return new ResponseEntity<>(String.format("The tattoo with id: %d has been deleted", id), HttpStatus.OK);
+    }
+
 }

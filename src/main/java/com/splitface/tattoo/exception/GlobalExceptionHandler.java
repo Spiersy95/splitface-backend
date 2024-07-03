@@ -52,6 +52,11 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(e.getMessage(),HttpStatus.NOT_ACCEPTABLE);
     }
 
+    @ExceptionHandler
+    public ResponseEntity<Object> handleTattooIdDoesNotExistException(TattooIdDoesNotExistException e){
+        return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
+    }
+
 
 
 }

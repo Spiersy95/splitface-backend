@@ -63,6 +63,10 @@ public class ArtistController {
         return new ResponseEntity<>(artistService.getArtistById(artistId),HttpStatus.OK);
     }
 
-
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> deleteArtistById(@PathVariable("id") Long id){
+        artistService.deleteArtistById(id);
+        return new ResponseEntity<>(String.format("The artist with id: %d has been deleted", id), HttpStatus.OK);
+    }
 
 }

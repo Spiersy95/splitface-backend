@@ -1,9 +1,8 @@
 package com.splitface.tattoo.service.test;
 
-//<<<<<<< Scott-Get-Tattoos-By-Style
-//=======
+
 import com.splitface.tattoo.exception.exceptions.ArtistIdDoesNotExistException;
-//>>>>>>> main
+
 import com.splitface.tattoo.exception.exceptions.EmptyArtistTableException;
 import com.splitface.tattoo.exception.exceptions.PasswordValidatorException;
 import com.splitface.tattoo.models.Artist;
@@ -21,8 +20,12 @@ import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.when;
+
+import static org.mockito.Mockito.*;
+
 
 @SpringBootTest
 public class ArtistServiceImplTest {
@@ -49,7 +52,7 @@ public class ArtistServiceImplTest {
     }
 
     @Test
-    public void getAllArtistNonEmpty() throws EmptyArtistTableException {
+    void getAllArtistNonEmpty() throws EmptyArtistTableException {
         List<Artist> artistList = new ArrayList<>();
 
         artistList.add(scott);
@@ -61,7 +64,7 @@ public class ArtistServiceImplTest {
     }
 
     @Test
-    public void getAllArtistEmpty() throws EmptyArtistTableException {
+    void getAllArtistEmpty() throws EmptyArtistTableException {
         List<Artist> artistList = new ArrayList<>();
 
         when(artistRepository.findAll()).thenReturn(artistList);
@@ -70,7 +73,7 @@ public class ArtistServiceImplTest {
     }
 
     @Test
-    public void getArtistByIdNonEmpty(){
+    void getArtistByIdNonEmpty(){
         when(artistRepository.findById(1L)).thenReturn(Optional.ofNullable(scott));
         when(artistRepository.findById(4L)).thenReturn(Optional.ofNullable(jackson));
 
@@ -79,10 +82,11 @@ public class ArtistServiceImplTest {
     }
 
     @Test
-    public void getArtistByIdEmpty(){
+    void getArtistByIdEmpty(){
         when(artistRepository.findById(2L)).thenReturn(Optional.empty());
         assertThrows(ArtistIdDoesNotExistException.class, () -> artistServiceImpl.getArtistById(2L));
     }
+
 
 
     @Test
@@ -96,6 +100,23 @@ public class ArtistServiceImplTest {
         Artist artist1 = new Artist();
         artist1.setPassword("1234567");
         assertThrows(PasswordValidatorException.class, ()->artistServiceImpl.editArtist(1L,artist1));
+    }
+
+    @Test
+    void deleteArtistById(){
+        Optional<Artist> empty = Optional.empty();
+
+        when(artistRepository.findById(1L)).thenReturn(Optional.ofNullable(scott));
+        when(artistRepository.findById(4L)).thenReturn(Optional.ofNullable(jackson));
+        when(artistRepository.findById(2L)).thenReturn(empty);
+
+        artistServiceImpl.deleteArtistById(1L);
+        artistServiceImpl.deleteArtistById(4L);
+
+        assertThrows(ArtistIdDoesNotExistException.class, () -> artistServiceImpl.deleteArtistById(2L));
+        verify(artistRepository, times(1)).delete(scott);
+        verify(artistRepository, times(1)).delete(jackson);
+
     }
 
 }

@@ -4,6 +4,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import com.splitface.tattoo.controller.TattooController;
 
+
+import com.splitface.tattoo.models.Style;
+import com.splitface.tattoo.models.Artist;
 import com.splitface.tattoo.models.Tattoo;
 import com.splitface.tattoo.service.TattooServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
@@ -16,6 +19,8 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.MvcResult;
+import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
@@ -23,10 +28,18 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import java.util.ArrayList;
 import java.util.List;
 
+
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+
+
+import static org.hamcrest.Matchers.notNullValue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 
 @AutoConfigureMockMvc
@@ -116,5 +129,43 @@ public class TattooControllerTest {
                 .andExpect(status().isCreated())
                 .andExpect(content().string("tattoo added"))
                 .andDo(print());
+    }
+    
+      
+    void createTattooRecord() throws Exception{
+
+        Artist artist = new Artist(4L,"name","location","email","password",null);
+
+        tattoo1.setArtist(artist);
+        when(mockTattooServiceImpl.addTattooInDb(tattoo1, 4L)).thenReturn(tattoo1);
+
+        String content = mapper.writeValueAsString(tattoo1);
+        MockHttpServletRequestBuilder mockRequest = MockMvcRequestBuilders.post("/tattoo/artist?id=4")
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON)
+                .content(content);
+        mockMvcController.perform(mockRequest)
+                .andExpect(status().isOk())
+                .andExpect(MockMvcResultMatchers.jsonPath("$.design").value("dsfdsf"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.price").value("£50"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.artist.id").value(4L));
+
+
+    }
+
+    @Test
+    void deleteTattooByIdTest() throws Exception {
+        String expectedString = "The tattoo with id: 2 has been deleted";
+
+
+        MvcResult result = this.mockMvcController.perform(
+                        MockMvcRequestBuilders.delete("/tattoo/2"))
+                .andExpect(MockMvcResultMatchers.status().isOk()).andReturn();
+
+        String content = result.getResponse().getContentAsString();
+
+        assertEquals(expectedString, content);
+
+        verify(mockTattooServiceImpl, times(1)).deleteTattooById(2L);
     }
 }

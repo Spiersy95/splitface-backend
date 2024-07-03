@@ -14,6 +14,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
@@ -24,6 +25,10 @@ import java.util.List;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.*;
+
 
 @AutoConfigureMockMvc
 @SpringBootTest
@@ -78,6 +83,7 @@ public class ArtistControllerTest {
                 .andExpect(MockMvcResultMatchers.jsonPath("$[1].id").value(4L))
                 .andExpect(MockMvcResultMatchers.jsonPath("$[1].name").value("Jackson"))
                 .andExpect(MockMvcResultMatchers.jsonPath("$[1].location").value("location"));
+
     }
 
     @Test
@@ -110,4 +116,24 @@ public class ArtistControllerTest {
                 .andExpect(content().string("artist created Scott Stirling"))
                 .andDo(print());
     }
+
+    @DisplayName("DELETE artist by ID")
+    void deleteArtistById() throws Exception {
+
+        String expectedString = "The artist with id: 1 has been deleted";
+
+
+        MvcResult result = this.mockMvcController.perform(
+                        MockMvcRequestBuilders.delete("/artist/1"))
+                .andExpect(MockMvcResultMatchers.status().isOk()).andReturn();
+
+        String content = result.getResponse().getContentAsString();
+
+        assertEquals(expectedString, content);
+
+        verify(mockArtistServiceImpl, times(1)).deleteArtistById(1L);
+
+
+    }
+
 }

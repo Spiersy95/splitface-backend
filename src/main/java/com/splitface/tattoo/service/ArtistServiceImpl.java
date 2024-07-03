@@ -124,4 +124,13 @@ public class ArtistServiceImpl implements ArtistService {
     public List<String> getListOfEmails() {
         return new ArrayList<>(artistRepository.getAllEmails());
     }
+
+    @Override
+    public void deleteArtistById(Long id){
+        Optional<Artist> artist = artistRepository.findById(id);
+        if (artist.isEmpty()){
+            throw new ArtistIdDoesNotExistException("Sorry no artist with this id exists in the database");
+        }
+        artistRepository.delete(artist.get());
+    }
 }
