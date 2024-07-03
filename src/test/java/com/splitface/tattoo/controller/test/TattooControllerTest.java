@@ -25,6 +25,7 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -68,8 +69,8 @@ public class TattooControllerTest {
     public void setup(){
         mockMvcController = MockMvcBuilders.standaloneSetup(tattooController).build();
         mapper = new ObjectMapper();
-        tattoo1 = new Tattoo(2L, "dsfdsf", "£50", null, null);
-        tattoo2 = new Tattoo(6L, "7", "£50", null, null);
+        tattoo1 = new Tattoo(2L, "dsfdsf", "£50", null, "2", null, Instant.now());
+        tattoo2 = new Tattoo(6L, "7", "£50", null, "0", null, Instant.now());
 
 
         }
