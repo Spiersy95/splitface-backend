@@ -112,7 +112,7 @@ public class TattooControllerTest {
                 .andExpect(MockMvcResultMatchers.jsonPath("$[1].price").value("£50"));
 
 
-//=======
+    }
 
     @Test
     void createTattooRecord() throws Exception{
@@ -132,6 +132,6 @@ public class TattooControllerTest {
                 .andExpect(MockMvcResultMatchers.jsonPath("$.design").value("dsfdsf"))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.price").value("£50"))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.artist.id").value(4L));
-//>>>>>>> main
+
     }
 }

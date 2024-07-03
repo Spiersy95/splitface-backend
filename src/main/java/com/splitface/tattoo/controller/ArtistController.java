@@ -54,6 +54,12 @@ public class ArtistController {
         }else throw new ResponseStatusException(HttpStatus.NOT_FOUND,"Cant be found");
     }
 
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> deleteArtistById(@PathVariable("id") Long id){
+        artistService.deleteArtistById(id);
+        return new ResponseEntity<>(String.format("The artist with id: %d has been deleted", id), HttpStatus.OK);
+    }
+
 
 
 
