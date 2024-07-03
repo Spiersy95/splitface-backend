@@ -4,11 +4,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import com.splitface.tattoo.controller.TattooController;
 
-//<<<<<<< Scott-Get-Tattoos-By-Style
 import com.splitface.tattoo.models.Style;
-//=======
 import com.splitface.tattoo.models.Artist;
-//>>>>>>> main
 import com.splitface.tattoo.models.Tattoo;
 import com.splitface.tattoo.service.TattooServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
@@ -93,7 +90,6 @@ public class TattooControllerTest {
 
     }
 
-//<<<<<<< Scott-Get-Tattoos-By-Style
     @Test
     void getTattoosByStyle() throws Exception {
 
@@ -134,6 +130,7 @@ public class TattooControllerTest {
                 .andExpect(MockMvcResultMatchers.jsonPath("$.price").value("£50"))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.artist.id").value(4L));
 
+
     }
 
     @Test
@@ -150,5 +147,6 @@ public class TattooControllerTest {
         assertEquals(expectedString, content);
 
         verify(mockTattooServiceImpl, times(1)).deleteTattooById(2L);
+
     }
 }
