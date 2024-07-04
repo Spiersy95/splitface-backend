@@ -23,4 +23,9 @@ public interface TattooRepository extends CrudRepository<Tattoo, Long> {
     @Query(value = "SELECT * FROM tattoo WHERE artist_id=:artistId", nativeQuery = true)
     List<Tattoo> getTattoosByArtistId( @Param("artistId") Long artistId);
 
+    @Query(value = """
+            SELECT artist_id FROM tattoo
+            WHERE id =: tattooId
+            """)
+    Long getArtistIdByTattooId(@Param("tattooId") Long tattooId);
 }

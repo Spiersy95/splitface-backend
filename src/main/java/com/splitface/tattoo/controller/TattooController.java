@@ -42,7 +42,7 @@ public class TattooController {
         return new ResponseEntity<>("tattoo added",HttpStatus.CREATED);
     }
 
-    @GetMapping("/artist")
+    @GetMapping("/tattoos/artist")
     public ResponseEntity<List<Tattoo>> getAllTattoosByArtistId(@RequestParam(name = "id") Long artistId){
         return new ResponseEntity<>(tattooService.getTattoosByArtist(artistId),HttpStatus.OK);
     }
@@ -52,5 +52,8 @@ public class TattooController {
         tattooService.deleteTattooById(id);
         return new ResponseEntity<>(String.format("The tattoo with id: %d has been deleted", id), HttpStatus.OK);
     }
+
+    @GetMapping("/artist/{id}")
+    public ResponseEntity<Long> getartistIdByTattooId
 
 }
