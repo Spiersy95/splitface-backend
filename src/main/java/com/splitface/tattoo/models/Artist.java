@@ -28,7 +28,6 @@ public class Artist {
     private String password;
 
     @OneToMany(mappedBy = "artist", fetch = FetchType.LAZY)
-    @JsonManagedReference
     private List<Tattoo> tattoos;
 
     public Long getId() {

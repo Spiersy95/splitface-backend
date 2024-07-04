@@ -27,7 +27,7 @@ public class Tattoo {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "artist_id")
-    @JsonBackReference
+    @JsonIgnore
     private Artist artist;
 
 
