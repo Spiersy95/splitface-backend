@@ -1,5 +1,6 @@
 package com.splitface.tattoo.controller;
 
+import com.splitface.tattoo.exception.exceptions.ArtistIdDoesNotExistException;
 import com.splitface.tattoo.models.Artist;
 import com.splitface.tattoo.service.ArtistService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -34,6 +35,7 @@ public class ArtistController {
     @GetMapping("/{id}")
     public ResponseEntity<Artist> getArtistById(@PathVariable Long id){
         Artist artist = artistService.getArtistById(id);
+        System.out.println(artist.getClass().getName());
         return new ResponseEntity<>(artist, HttpStatus.FOUND);
     }
 

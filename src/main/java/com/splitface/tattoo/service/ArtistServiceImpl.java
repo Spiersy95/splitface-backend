@@ -2,7 +2,9 @@ package com.splitface.tattoo.service;
 
 import com.splitface.tattoo.exception.exceptions.*;
 import com.splitface.tattoo.models.Artist;
+import com.splitface.tattoo.models.Tattoo;
 import com.splitface.tattoo.repository.ArtistRepository;
+import com.splitface.tattoo.repository.TattooRepository;
 import com.splitface.tattoo.security.PasswordUtils;
 import com.splitface.tattoo.validation.artistValidation.ArtistCheck;
 import com.splitface.tattoo.validation.artistValidation.ArtistCheckImpl;
@@ -22,6 +24,8 @@ public class ArtistServiceImpl implements ArtistService {
     private  final ArtistCheck artistCheck = new ArtistCheckImpl();
     @Autowired
     ArtistRepository artistRepository;
+    @Autowired
+    TattooRepository tattooRepository;
 
 
     @Override
@@ -122,7 +126,18 @@ public class ArtistServiceImpl implements ArtistService {
         return newArtist;
     }
 
-    /// helpful methods
+//    @Override
+//    public Artist getArtistByTattooId(Long tattooId) {
+//        Tattoo tattoo = tattooRepository.findById(tattooId)
+//                .orElseThrow(()->new TattooIdDoesNotExistException("no this ID"));
+//        System.out.println(" HADFLHBD!!!! "+ (tattoo.getArtist().getId()).getClass().getName());
+//        Long artistId = tattoo.getArtist().getId();
+//
+//        Artist artist = artistRepository.findById(artistId).orElseThrow(()->new RuntimeException("aeg"));
+//        return artist;
+//    }
+
+
 
     @Override
     public List<String> getListOfEmails() {

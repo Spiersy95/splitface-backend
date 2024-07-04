@@ -80,4 +80,12 @@ public class TattooServiceImpl implements TattooService {
         tattooRepository.delete(tattoo.get());
     }
 
+    @Override
+    public Artist getArtistByTattooId(Long tattooId) {
+        Long artistId = tattooRepository.getArtistId(tattooId);
+        Artist artist = artistRepository.findById(artistId)
+                .orElseThrow(()->new ArtistIdDoesNotExistException("no id"));
+        return artist;
+    }
+
 }

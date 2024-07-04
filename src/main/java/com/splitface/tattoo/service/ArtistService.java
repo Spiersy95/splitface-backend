@@ -15,5 +15,6 @@ public interface ArtistService {
     Artist getArtistByEmail(String email);
     Artist editArtist(Long artistId, Artist newArtist);
     void deleteArtistById(Long id);
+    //Artist getArtistByTattooId(Long tattooId);
 
 }
