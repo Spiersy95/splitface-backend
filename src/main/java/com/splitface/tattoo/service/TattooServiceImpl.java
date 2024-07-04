@@ -11,6 +11,7 @@ import com.splitface.tattoo.repository.TattooRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -65,6 +66,7 @@ public class TattooServiceImpl implements TattooService {
         }
         if (!isPresent){
             tattoo.setArtist(artist);
+            tattoo.setTimePosted(Instant.now());
             tattooRepository.save(tattoo);
             return tattoo;
         }else return null;
