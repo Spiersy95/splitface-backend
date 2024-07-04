@@ -46,7 +46,7 @@ public class TattooController {
         return new ResponseEntity<>("tattoo added",HttpStatus.CREATED);
     }
 
-    @GetMapping("/artist")
+    @GetMapping("/tattoos/artist")
     public ResponseEntity<List<Tattoo>> getAllTattoosByArtistId(@RequestParam(name = "id") Long artistId){
         return new ResponseEntity<>(tattooService.getTattoosByArtist(artistId),HttpStatus.OK);
     }

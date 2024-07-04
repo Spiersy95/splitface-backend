@@ -11,7 +11,7 @@ public interface TattooRepository extends CrudRepository<Tattoo, Long> {
 
 
     @Query(value = """
-        SELECT tattoo.id, tattoo.design, tattoo.price, tattoo.artist_id\s
+        SELECT tattoo.id, tattoo.design, tattoo.price, tattoo.hours_worked, tattoo.artist_id, tattoo.time_posted\s
         FROM tattoo
         INNER JOIN style_tattoo_mapping stm ON tattoo.id = stm.tattoo_id
         INNER JOIN style ON style.id = stm.style_id
@@ -25,6 +25,4 @@ public interface TattooRepository extends CrudRepository<Tattoo, Long> {
 
     @Query(value = "SELECT artist_id from tattoo WHERE id=:tattooId", nativeQuery = true)
     Long getArtistId(@Param("tattooId") Long tattooId);
-
-
 }
