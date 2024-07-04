@@ -53,7 +53,7 @@ public class TattooController {
         return new ResponseEntity<>(String.format("The tattoo with id: %d has been deleted", id), HttpStatus.OK);
     }
 
-    @GetMapping("/artist/{id}")
-    public ResponseEntity<Long> getartistIdByTattooId
+//    @GetMapping("/artist/{id}")
+//    public ResponseEntity<Long> getartistIdByTattooId
 
 }
