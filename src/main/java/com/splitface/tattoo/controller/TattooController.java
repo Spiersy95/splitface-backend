@@ -1,5 +1,7 @@
 package com.splitface.tattoo.controller;
 
+import com.splitface.tattoo.exception.exceptions.ArtistIdDoesNotExistException;
+import com.splitface.tattoo.models.Artist;
 import com.splitface.tattoo.models.Tattoo;
 import com.splitface.tattoo.service.ArtistService;
 import com.splitface.tattoo.service.TattooService;
@@ -10,6 +12,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+
+import static java.util.Objects.isNull;
 
 @RestController
 @RequestMapping("/tattoo")
@@ -51,6 +55,12 @@ public class TattooController {
     public ResponseEntity<String> deleteTattooById(@PathVariable("id") Long id){
         tattooService.deleteTattooById(id);
         return new ResponseEntity<>(String.format("The tattoo with id: %d has been deleted", id), HttpStatus.OK);
+    }
+
+    @GetMapping("/tattoo")
+    public ResponseEntity<Artist> getArtistByTattooIdController(@RequestParam(name = "id") Long tattooId){
+        Artist artist = tattooService.getArtistByTattooId(tattooId);
+        return new ResponseEntity<>(artist, HttpStatus.FOUND);
     }
 
 }
