@@ -37,7 +37,6 @@ public class Tattoo {
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "style_tattoo_mapping", joinColumns = @JoinColumn(name = "tattoo_id"),
             inverseJoinColumns = @JoinColumn(name = "style_id"))
-    @JsonManagedReference
     private List<Style> styles;
 
     @Column(name = "time_posted")
