@@ -56,19 +56,23 @@ public class ArtistServiceImpl implements ArtistService {
     public String addArtist(Artist artist) {
         String name = artist.getName();
         String location = artist.getLocation();
+        artist.setEmail(artist.getEmail().toLowerCase());
         String email = artist.getEmail();
         String password = artist.getPassword();
         PasswordUtils passwordUtils = new PasswordUtils();
         artist.setPassword(passwordUtils.hashPassword(artist.getPassword()));
-        if (artistCheck.checkName(name) &&
-                artistCheck.checkEmail(email) &&
-                !getListOfEmails().contains(email) &&
-                artistCheck.checkPassword(password) &&
-                artistCheck.checkPostcode(location)){
+        artistCheck.checkName(name);
+        artistCheck.checkEmail(email);
+        artistCheck.checkPassword(password);
+        artistCheck.checkPostcode(location);
+        if(!getListOfEmails().contains(email)) {
             artistRepository.save(artist);
             return "artist added";
-        }else throw new RuntimeException("Something is wrong");
+        } else {
+            throw new InvalidEmailException("Sorry this an account is already associated with this e-mail");
+        }
     }
+
 
 
     @Override
