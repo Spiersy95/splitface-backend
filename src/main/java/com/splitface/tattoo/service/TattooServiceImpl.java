@@ -1,10 +1,10 @@
 package com.splitface.tattoo.service;
 
-import com.splitface.tattoo.exception.exceptions.*;
-
-import com.splitface.tattoo.exception.exceptions.EmptyTattooTableException;
+import com.splitface.tattoo.exception.serviceLayer.serviceLayerExceptions.EmptyTattooTableException;
+import com.splitface.tattoo.exception.serviceLayer.serviceLayerExceptions.ArtistIdDoesNotExistException;
+import com.splitface.tattoo.exception.serviceLayer.serviceLayerExceptions.TattooIdDoesNotExistException;
+import com.splitface.tattoo.exception.serviceLayer.serviceLayerExceptions.TattooMatchingStyleIdException;
 import com.splitface.tattoo.models.Artist;
-import com.splitface.tattoo.models.Style;
 import com.splitface.tattoo.models.Tattoo;
 import com.splitface.tattoo.repository.ArtistRepository;
 import com.splitface.tattoo.repository.TattooRepository;

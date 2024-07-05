@@ -1,6 +1,8 @@
 package com.splitface.tattoo.service;
 
-import com.splitface.tattoo.exception.exceptions.*;
+import com.splitface.tattoo.exception.artistCheck.artistCheckExceptions.*;
+import com.splitface.tattoo.exception.serviceLayer.serviceLayerExceptions.ArtistIdDoesNotExistException;
+import com.splitface.tattoo.exception.serviceLayer.serviceLayerExceptions.EmptyArtistTableException;
 import com.splitface.tattoo.models.Artist;
 import com.splitface.tattoo.repository.ArtistRepository;
 import com.splitface.tattoo.security.PasswordUtils;
@@ -65,7 +67,7 @@ public class ArtistServiceImpl implements ArtistService {
             artistRepository.save(artist);
             return "artist added";
         } else {
-            throw new InvalidEmailException("Sorry this an account is already associated with this e-mail");
+            throw new EmailValidatorException("Sorry this an account is already associated with this e-mail");
         }
     }
 

@@ -1,5 +1,6 @@
 package com.splitface.tattoo.controller;
 
+import com.splitface.tattoo.models.Style;
 import com.splitface.tattoo.models.Tattoo;
 import com.splitface.tattoo.service.StyleService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +17,12 @@ public class StyleController {
     @Autowired
     StyleService styleService;
 
+    @GetMapping("/styles")
+    public ResponseEntity<List<Style>> getAllStyles(){
+        List<Style> styles = styleService.getAllStylesFromDB();
+        return new ResponseEntity<>(styles, HttpStatus.FOUND);
+    }
+
     @PostMapping
     public ResponseEntity<String> addStylesForTattoo(@RequestParam(name = "id") Long tattooId,
                                                      @RequestBody List<String> styleNames){
@@ -23,4 +30,11 @@ public class StyleController {
         styleService.addStylesForTattoo(tattooId,styleNames);
         return new ResponseEntity<>("styles added", HttpStatus.ACCEPTED);
     }
+
+//    @PostMapping("/{styleName}")
+//    public ResponseEntity<String> addStyle(@PathVariable("StyleName") String styleName){
+//        styleService.addStyle(styleName);
+//        return new ResponseEntity<>(String.format("The style %s has been added", styleName), HttpStatus.ACCEPTED);
+//    }
+
 }

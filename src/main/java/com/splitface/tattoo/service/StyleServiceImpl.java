@@ -1,7 +1,6 @@
 package com.splitface.tattoo.service;
 
-import com.splitface.tattoo.exception.exceptions.ArtistIdDoesNotExistException;
-import com.splitface.tattoo.exception.exceptions.EmptyStyleTableException;
+import com.splitface.tattoo.exception.serviceLayer.serviceLayerExceptions.ArtistIdDoesNotExistException;
 import com.splitface.tattoo.models.Style;
 import com.splitface.tattoo.models.Tattoo;
 import com.splitface.tattoo.repository.StyleRepository;

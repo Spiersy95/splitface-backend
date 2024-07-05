@@ -1,7 +1,7 @@
 package com.splitface.tattoo.validation.artistValidation;
 
-import com.splitface.tattoo.exception.exceptions.NameValidatorException;
-import com.splitface.tattoo.exception.exceptions.PasswordValidatorException;
+import com.splitface.tattoo.exception.artistCheck.artistCheckExceptions.NameValidatorException;
+import com.splitface.tattoo.exception.artistCheck.artistCheckExceptions.PasswordValidatorException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

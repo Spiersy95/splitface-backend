@@ -1,4 +1,4 @@
-package com.splitface.tattoo.exception.exceptions;
+package com.splitface.tattoo.exception.artistCheck.artistCheckExceptions;
 
 public class PasswordValidatorException extends RuntimeException{
     public PasswordValidatorException(String message) {

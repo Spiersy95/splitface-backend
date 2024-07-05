@@ -1,4 +1,4 @@
-package com.splitface.tattoo.exception.exceptions;
+package com.splitface.tattoo.exception.serviceLayer.serviceLayerExceptions;
 
 public class EmptyTattooTableException extends RuntimeException {
 
