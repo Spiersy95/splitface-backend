@@ -1,13 +1,16 @@
 package com.splitface.tattoo.service;
 
-import com.splitface.tattoo.exception.serviceLayer.serviceLayerExceptions.EmptyTattooTableException;
-import com.splitface.tattoo.exception.serviceLayer.serviceLayerExceptions.ArtistIdDoesNotExistException;
-import com.splitface.tattoo.exception.serviceLayer.serviceLayerExceptions.TattooIdDoesNotExistException;
-import com.splitface.tattoo.exception.serviceLayer.serviceLayerExceptions.TattooMatchingStyleIdException;
+import com.splitface.tattoo.exception.service.serviceExceptions.EmptyTattooTableException;
+import com.splitface.tattoo.exception.service.serviceExceptions.ArtistIdDoesNotExistException;
+import com.splitface.tattoo.exception.service.serviceExceptions.TattooIdDoesNotExistException;
+import com.splitface.tattoo.exception.service.serviceExceptions.TattooMatchingStyleIdException;
 import com.splitface.tattoo.models.Artist;
+import com.splitface.tattoo.models.Style;
 import com.splitface.tattoo.models.Tattoo;
 import com.splitface.tattoo.repository.ArtistRepository;
 import com.splitface.tattoo.repository.TattooRepository;
+import com.splitface.tattoo.validation.styleValidation.StyleCheck;
+import com.splitface.tattoo.validation.tattooValidation.TattooCheck;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -23,6 +26,12 @@ public class TattooServiceImpl implements TattooService {
     TattooRepository tattooRepository;
     @Autowired
     ArtistRepository artistRepository;
+    @Autowired
+    TattooCheck tattooCheck;
+    @Autowired
+    StyleService styleService;
+    @Autowired
+    StyleCheck styleCheck;
 
     @Override
     public List<Tattoo> getAllTattoos() {
@@ -88,4 +97,21 @@ public class TattooServiceImpl implements TattooService {
         return artist;
     }
 
+    @Override
+    public void updateTattoo(Tattoo tattoo, Long tattooId){
+        Optional<Tattoo> optionalTattooToUpdate = tattooRepository.findById(tattooId);
+        if (optionalTattooToUpdate.isEmpty()){
+            throw new TattooIdDoesNotExistException(String.format("Sorry no tattoo with id: %d exist in the database",
+                    tattooId));
+        }
+        Tattoo tattooToUpdate = optionalTattooToUpdate.get();
+        tattooCheck.checkPrice(tattoo.getPrice());
+        tattooToUpdate.setPrice(tattoo.getPrice());
+        tattooCheck.checkWorkedHours(tattoo.getHoursWorked());
+        tattooToUpdate.setPrice(tattoo.getPrice());
+        List<Style> allStyles = styleService.getAllStylesFromDB();
+        styleCheck.validateStylesAreInList(tattoo.getStyles(), allStyles);
+        tattooToUpdate.setStyles(tattoo.getStyles());
+        tattooRepository.save(tattooToUpdate);
+    }
 }

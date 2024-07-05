@@ -2,8 +2,8 @@ package com.splitface.tattoo.service.test;
 
 
 
-import com.splitface.tattoo.exception.serviceLayer.serviceLayerExceptions.EmptyTattooTableException;
-import com.splitface.tattoo.exception.serviceLayer.serviceLayerExceptions.TattooIdDoesNotExistException;
+import com.splitface.tattoo.exception.service.serviceExceptions.EmptyTattooTableException;
+import com.splitface.tattoo.exception.service.serviceExceptions.TattooIdDoesNotExistException;
 import com.splitface.tattoo.models.Tattoo;
 
 import com.splitface.tattoo.repository.TattooRepository;

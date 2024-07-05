@@ -4,8 +4,8 @@ import com.splitface.tattoo.exception.artistCheck.artistCheckExceptions.EmailVal
 import com.splitface.tattoo.exception.artistCheck.artistCheckExceptions.NameValidatorException;
 import com.splitface.tattoo.exception.artistCheck.artistCheckExceptions.PasswordValidatorException;
 import com.splitface.tattoo.exception.artistCheck.artistCheckExceptions.PostcodeValidatorException;
-import com.splitface.tattoo.exception.serviceLayer.serviceLayerExceptions.ArtistIdDoesNotExistException;
-import com.splitface.tattoo.exception.serviceLayer.serviceLayerExceptions.TattooMatchingStyleIdException;
+import com.splitface.tattoo.exception.service.serviceExceptions.ArtistIdDoesNotExistException;
+import com.splitface.tattoo.exception.service.serviceExceptions.TattooMatchingStyleIdException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;

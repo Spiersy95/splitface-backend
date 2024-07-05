@@ -17,7 +17,9 @@ public interface TattooService {
 
     void deleteTattooById(Long id);
 
-
     Artist getArtistByTattooId(Long tattooId);
+
+    void updateTattoo(Tattoo tattoo, Long tattooId);
+
 
 }

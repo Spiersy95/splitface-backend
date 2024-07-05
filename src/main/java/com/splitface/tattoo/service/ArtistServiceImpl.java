@@ -1,10 +1,9 @@
 package com.splitface.tattoo.service;
 
 import com.splitface.tattoo.exception.artistCheck.artistCheckExceptions.*;
-import com.splitface.tattoo.exception.serviceLayer.serviceLayerExceptions.ArtistIdDoesNotExistException;
-import com.splitface.tattoo.exception.serviceLayer.serviceLayerExceptions.EmptyArtistTableException;
+import com.splitface.tattoo.exception.service.serviceExceptions.ArtistIdDoesNotExistException;
+import com.splitface.tattoo.exception.service.serviceExceptions.EmptyArtistTableException;
 import com.splitface.tattoo.models.Artist;
-import com.splitface.tattoo.models.Tattoo;
 import com.splitface.tattoo.repository.ArtistRepository;
 import com.splitface.tattoo.repository.TattooRepository;
 import com.splitface.tattoo.security.PasswordUtils;
