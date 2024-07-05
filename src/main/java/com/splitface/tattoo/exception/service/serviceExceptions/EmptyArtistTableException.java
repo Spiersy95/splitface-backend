@@ -1,4 +1,4 @@
-package com.splitface.tattoo.exception.serviceLayer.serviceLayerExceptions;
+package com.splitface.tattoo.exception.service.serviceExceptions;
 
 public class EmptyArtistTableException extends RuntimeException{
 
