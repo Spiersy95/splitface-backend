@@ -31,10 +31,10 @@ public class StyleController {
         return new ResponseEntity<>("styles added", HttpStatus.ACCEPTED);
     }
 
-//    @PostMapping("/{styleName}")
-//    public ResponseEntity<String> addStyle(@PathVariable("StyleName") String styleName){
-//        styleService.addStyle(styleName);
-//        return new ResponseEntity<>(String.format("The style %s has been added", styleName), HttpStatus.ACCEPTED);
-//    }
+    @PostMapping
+    public ResponseEntity<String> addStyle(@RequestBody Style style){
+        styleService.addStyle(style);
+        return new ResponseEntity<>(String.format("The style %s has been added", styleName), HttpStatus.ACCEPTED);
+    }
 
 }

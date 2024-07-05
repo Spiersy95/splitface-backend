@@ -1,6 +1,8 @@
 package com.splitface.tattoo.service;
 
 import com.splitface.tattoo.exception.service.serviceExceptions.ArtistIdDoesNotExistException;
+import com.splitface.tattoo.exception.service.serviceExceptions.StyleAlreadyInDbException;
+import com.splitface.tattoo.exception.service.serviceExceptions.StyleNotInDatabaseException;
 import com.splitface.tattoo.models.Style;
 import com.splitface.tattoo.models.Tattoo;
 import com.splitface.tattoo.repository.StyleRepository;
@@ -10,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import static java.util.Objects.isNull;
 
@@ -31,15 +34,15 @@ public class StyleServiceImpl implements StyleService{
     public void addStylesForTattoo(Long tattooId, List<String> styleNames) {
         Tattoo tattoo = tattooRepository.findById(tattooId)
                 .orElseThrow(()->new ArtistIdDoesNotExistException("no tattoo under this id"));
-        addStyleInDbIfNotExist(styleNames);
+        addStylesInDbIfNotExist(styleNames);
         List<Style> styleList = new ArrayList<>();
         for (String st:styleNames) {
-            Style style = new Style();
-            style = styleRepository.getStyleByStyleName(st);
-            if (isNull(style)){
-                System.out.println("is null");
+            Optional<Style> optionalStyle = styleRepository.getStyleByStyleName(st);
+            if (optionalStyle.isEmpty()){
+                throw new StyleNotInDatabaseException(String.format("Sorry the style named %s is not in the database", st));
+            } else {
+                styleList.add(optionalStyle.get());
             }
-            styleList.add(style);
         }
         tattoo.setStyles(styleList);
         tattooRepository.save(tattoo);
@@ -47,7 +50,7 @@ public class StyleServiceImpl implements StyleService{
 
 
     //additional functions
-    private void addStyleInDbIfNotExist(List<String> styleNames) {
+    public void addStylesInDbIfNotExist(List<String> styleNames) {
         List<Style> styleListFromDb = getAllStylesFromDB(); //styles from DB
         List<String> nameStylesFromDb = new ArrayList<>();  //name of styles from DB
         for (Style st:styleListFromDb){
@@ -61,6 +64,17 @@ public class StyleServiceImpl implements StyleService{
             }
         }
     }
+
+    public void addStyleInDbIfNotExist(Style style){
+        Optional<Style> optStyle = styleRepository.getStyleByStyleName(style.getStyleName());
+        if(optStyle.isPresent()){
+            throw new StyleAlreadyInDbException("This style already exists in the db");
+        }
+        styleRepository.save(style);
+
+
+    }
+
 
 
 }
