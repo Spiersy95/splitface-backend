@@ -2,6 +2,7 @@ package com.splitface.tattoo.controller.test;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.splitface.tattoo.controller.TattooController;
 
 
@@ -61,6 +62,8 @@ public class TattooControllerTest {
     private ObjectMapper mapper;
 
 
+
+
     private Tattoo tattoo1;
     private Tattoo tattoo2;
 
@@ -69,6 +72,7 @@ public class TattooControllerTest {
     public void setup(){
         mockMvcController = MockMvcBuilders.standaloneSetup(tattooController).build();
         mapper = new ObjectMapper();
+        mapper.registerModule(new JavaTimeModule());
         tattoo1 = new Tattoo(2L, "dsfdsf", "£50", null, "2", null, Instant.now());
         tattoo2 = new Tattoo(6L, "7", "£50", null, "0", null, Instant.now());
 

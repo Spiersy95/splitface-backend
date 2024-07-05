@@ -1,8 +1,5 @@
 package com.splitface.tattoo.validation.artistValidation;
-import com.splitface.tattoo.exception.exceptions.InvalidEmailException;
-import com.splitface.tattoo.exception.exceptions.InvalidPostcodeException;
-import com.splitface.tattoo.exception.exceptions.NameValidatorException;
-import com.splitface.tattoo.exception.exceptions.PasswordValidatorException;
+import com.splitface.tattoo.exception.artistCheck.artistCheckExceptions.*;
 
 import java.util.regex.Pattern;
 
@@ -43,7 +40,7 @@ public class ArtistCheckImpl implements ArtistCheck {
     public boolean checkPostcode(String postcode) {
         String regExpression = ("([Gg][Ii][Rr] 0[Aa]{2})|((([A-Za-z][0-9]{1,2})|(([A-Za-z][A-Ha-hJ-Yj-y][0-9]{1,2})|(([A-Za-z][0-9][A-Za-z])|([A-Za-z][A-Ha-hJ-Yj-y][0-9][A-Za-z]?))))\\s?[0-9][A-Za-z]{2})");
         if(!Pattern.compile(regExpression).matcher(postcode).matches()){
-            throw new InvalidPostcodeException("Invalid postcode");
+            throw new PostcodeValidatorException("Invalid postcode");
         }
         return true;
     }
