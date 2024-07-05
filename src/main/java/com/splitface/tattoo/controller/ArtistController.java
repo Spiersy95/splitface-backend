@@ -1,6 +1,5 @@
 package com.splitface.tattoo.controller;
 
-import com.splitface.tattoo.exception.exceptions.ArtistIdDoesNotExistException;
 import com.splitface.tattoo.models.Artist;
 import com.splitface.tattoo.service.ArtistService;
 import io.swagger.v3.oas.annotations.Operation;
