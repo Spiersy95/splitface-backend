@@ -1,6 +1,6 @@
 package com.splitface.tattoo.validation.styleValidation;
 
-import com.splitface.tattoo.exception.service.serviceExceptions.StyleNotInDatabaseException;
+
 import com.splitface.tattoo.exception.styleCheck.styleCheckExceptions.StyleNotContainedInListException;
 import com.splitface.tattoo.models.Style;
 

@@ -8,7 +8,7 @@ public class ArtistCheckImpl implements ArtistCheck {
     public boolean checkEmail(String email) {
         String regExpression = ("[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,3}");
         if (!Pattern.compile(regExpression).matcher(email).matches()){
-            throw new InvalidEmailException("Sorry this is not a valid e-mail");
+            throw new EmailValidatorException("Sorry this is not a valid e-mail");
         }
         return true;
     }

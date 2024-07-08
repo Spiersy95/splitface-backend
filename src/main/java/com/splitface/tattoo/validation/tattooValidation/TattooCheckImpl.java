@@ -11,7 +11,7 @@ public class TattooCheckImpl implements TattooCheck {
 
     @Override
     public boolean checkWorkedHours(String hours) {
-        String regExpression = ("\\d");
+        String regExpression = ("\\d+");
         if(!Pattern.compile(regExpression).matcher(hours).matches()){
             throw new InvalidHoursWorkedException("Invalid work hours exception pleas only input an integer");
         }

@@ -25,8 +25,6 @@ public class ArtistServiceImpl implements ArtistService {
     private  final ArtistCheck artistCheck = new ArtistCheckImpl();
     @Autowired
     ArtistRepository artistRepository;
-    @Autowired
-    TattooRepository tattooRepository;
 
 
     @Override

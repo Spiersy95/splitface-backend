@@ -139,7 +139,7 @@ public class TattooControllerTest {
       
     void createTattooRecord() throws Exception{
 
-        Artist artist = new Artist(4L,"name","location","email","password",null);
+        Artist artist = new Artist(4L,"name","location","email","password",null, null);
 
         tattoo1.setArtist(artist);
         when(mockTattooServiceImpl.addTattooInDb(tattoo1, 4L)).thenReturn(tattoo1);

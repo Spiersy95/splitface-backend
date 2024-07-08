@@ -7,5 +7,5 @@ import java.util.List;
 public interface StyleService {
     List<Style> getAllStylesFromDB();
     void addStylesForTattoo(Long tattooId, List<String> styleNames);
-
+    void addStyleToDbIfNotExist(Style style);
 }
