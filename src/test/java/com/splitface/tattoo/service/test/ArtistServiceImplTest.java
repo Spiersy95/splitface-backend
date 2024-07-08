@@ -44,11 +44,11 @@ public class ArtistServiceImplTest {
     void setup(){
         scott = new Artist(1L,"Scott Stirling" ,
                 "location",
-                "Scott@outlook.com", "1%sdfdsf", null);
+                "Scott@outlook.com", "1%sdfdsf", null, null);
 
         jackson = new Artist(4L,"Jackson" ,
                 "location",
-                "Jackson@Outlook.com", "145sdf", null);
+                "Jackson@Outlook.com", "145sdf", null, null);
     }
 
     @Test

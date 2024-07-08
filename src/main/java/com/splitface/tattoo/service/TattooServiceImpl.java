@@ -10,7 +10,9 @@ import com.splitface.tattoo.models.Tattoo;
 import com.splitface.tattoo.repository.ArtistRepository;
 import com.splitface.tattoo.repository.TattooRepository;
 import com.splitface.tattoo.validation.styleValidation.StyleCheck;
+import com.splitface.tattoo.validation.styleValidation.StyleCheckImpl;
 import com.splitface.tattoo.validation.tattooValidation.TattooCheck;
+import com.splitface.tattoo.validation.tattooValidation.TattooCheckImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -26,12 +28,12 @@ public class TattooServiceImpl implements TattooService {
     TattooRepository tattooRepository;
     @Autowired
     ArtistRepository artistRepository;
-    @Autowired
-    TattooCheck tattooCheck;
+
     @Autowired
     StyleService styleService;
-    @Autowired
-    StyleCheck styleCheck;
+
+    private final TattooCheck tattooCheck = new TattooCheckImpl();
+    private final StyleCheck styleCheck = new StyleCheckImpl();
 
     @Override
     public List<Tattoo> getAllTattoos() {

@@ -23,7 +23,7 @@ public class StyleController {
         return new ResponseEntity<>(styles, HttpStatus.FOUND);
     }
 
-    @PostMapping
+    @PostMapping("/tattoo")
     public ResponseEntity<String> addStylesForTattoo(@RequestParam(name = "id") Long tattooId,
                                                      @RequestBody List<String> styleNames){
 
@@ -33,8 +33,8 @@ public class StyleController {
 
     @PostMapping
     public ResponseEntity<String> addStyle(@RequestBody Style style){
-        styleService.addStyle(style);
-        return new ResponseEntity<>(String.format("The style %s has been added", styleName), HttpStatus.ACCEPTED);
+        styleService.addStyleToDbIfNotExist(style);
+        return new ResponseEntity<>(String.format("The style %s has been added", style.getStyleName()), HttpStatus.ACCEPTED);
     }
 
 }

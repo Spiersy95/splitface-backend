@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import static java.util.Objects.isNull;
+
 
 @Service
 public class StyleServiceImpl implements StyleService{
@@ -65,14 +65,12 @@ public class StyleServiceImpl implements StyleService{
         }
     }
 
-    public void addStyleInDbIfNotExist(Style style){
+    public void addStyleToDbIfNotExist(Style style){
         Optional<Style> optStyle = styleRepository.getStyleByStyleName(style.getStyleName());
         if(optStyle.isPresent()){
             throw new StyleAlreadyInDbException("This style already exists in the db");
         }
         styleRepository.save(style);
-
-
     }
 
 
