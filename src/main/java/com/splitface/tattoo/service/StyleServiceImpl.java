@@ -34,10 +34,9 @@ public class StyleServiceImpl implements StyleService{
     public void addStylesForTattoo(Long tattooId, List<String> styleNames) {
         Tattoo tattoo = tattooRepository.findById(tattooId)
                 .orElseThrow(()->new ArtistIdDoesNotExistException("no tattoo under this id"));
-        addStylesInDbIfNotExist(styleNames);
         List<Style> styleList = new ArrayList<>();
         for (String st:styleNames) {
-            Optional<Style> optionalStyle = styleRepository.getStyleByStyleName(st);
+            Optional<Style> optionalStyle = styleRepository.findByStyleName(st);
             if (optionalStyle.isEmpty()){
                 throw new StyleNotInDatabaseException(String.format("Sorry the style named %s is not in the database", st));
             } else {
@@ -66,7 +65,7 @@ public class StyleServiceImpl implements StyleService{
     }
 
     public void addStyleToDbIfNotExist(Style style){
-        Optional<Style> optStyle = styleRepository.getStyleByStyleName(style.getStyleName());
+        Optional<Style> optStyle = styleRepository.findByStyleName(style.getStyleName());
         if(optStyle.isPresent()){
             throw new StyleAlreadyInDbException("This style already exists in the db");
         }

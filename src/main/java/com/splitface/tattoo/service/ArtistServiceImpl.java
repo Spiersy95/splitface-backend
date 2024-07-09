@@ -86,23 +86,20 @@ public class ArtistServiceImpl implements ArtistService {
     public Artist editArtist(Long artistId, Artist newArtist) {
         Artist artistFromDb = artistRepository.findById(artistId)
                 .orElseThrow(()->new ArtistIdDoesNotExistException("no artist with such id"));
-        newArtist.setId(artistFromDb.getId());
         newArtist.setTattoos(artistFromDb.getTattoos());
 
         if (isNull(newArtist.getName())){
-            newArtist.setName(artistFromDb.getName());
+            artistFromDb.setName(newArtist.getName());
         } else if (!artistCheck.checkName(newArtist.getName())) {
             throw new NameValidatorException("something wrong with name");
         }
 
         if (isNull(newArtist.getLocation())){
-            newArtist.setLocation(artistFromDb.getLocation());
+            artistFromDb.setLocation(newArtist.getLocation());
         } else if (!artistCheck.checkPostcode(newArtist.getLocation())) {
                 System.out.println(newArtist.getLocation());
                 throw new PostcodeValidatorException("PostCode validator in action");
             }
-
-
 
         if (isNull(newArtist.getEmail())){
             newArtist.setEmail(artistFromDb.getEmail());

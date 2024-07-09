@@ -6,6 +6,6 @@ import org.springframework.data.repository.CrudRepository;
 import java.util.Optional;
 
 public interface StyleRepository extends CrudRepository<Style, Long> {
-    Optional<Style> getStyleByStyleName(String styleName);
+    Optional<Style> findByStyleName(String styleName);
 
 }
