@@ -55,14 +55,14 @@ public class StyleServiceImplTest {
 
     @Test
     void addStyleToDbIfNotExistTest(){
-        when(styleRepository.getStyleByStyleName(realism.getStyleName())).thenReturn(Optional.empty());
+        when(styleRepository.findByStyleName(realism.getStyleName())).thenReturn(Optional.empty());
         styleServiceImpl.addStyleToDbIfNotExist(realism);
         verify(styleRepository, times(1)).save(realism);
     }
 
     @Test
     void addStyleToDbIfNotExistTestThrows(){
-        when(styleRepository.getStyleByStyleName(realism.getStyleName())).thenReturn(Optional.of(realism));
+        when(styleRepository.findByStyleName(realism.getStyleName())).thenReturn(Optional.of(realism));
 
         assertThrows(StyleAlreadyInDbException.class,() ->styleServiceImpl.addStyleToDbIfNotExist(realism));
 

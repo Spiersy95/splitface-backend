@@ -57,7 +57,7 @@ public class TattooController {
         return new ResponseEntity<>(String.format("The tattoo with id: %d has been deleted", id), HttpStatus.OK);
     }
 
-    @GetMapping("/tattoo")
+    @GetMapping("/artist")
     public ResponseEntity<Artist> getArtistByTattooIdController(@RequestParam(name = "id") Long tattooId){
         Artist artist = tattooService.getArtistByTattooId(tattooId);
         return new ResponseEntity<>(artist, HttpStatus.FOUND);

@@ -44,7 +44,7 @@ public class ArtistController {
     public ResponseEntity<String> addArtist(@RequestBody Artist artist){
         String name = artist.getName();
         artistService.addArtist(artist);
-        return new ResponseEntity<>("artist created "+name, HttpStatus.CREATED);
+        return new ResponseEntity<>("artist created " +name, HttpStatus.CREATED);
     }
 
 

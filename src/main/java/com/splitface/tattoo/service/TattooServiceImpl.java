@@ -1,9 +1,6 @@
 package com.splitface.tattoo.service;
 
-import com.splitface.tattoo.exception.service.serviceExceptions.EmptyTattooTableException;
-import com.splitface.tattoo.exception.service.serviceExceptions.ArtistIdDoesNotExistException;
-import com.splitface.tattoo.exception.service.serviceExceptions.TattooIdDoesNotExistException;
-import com.splitface.tattoo.exception.service.serviceExceptions.TattooMatchingStyleIdException;
+import com.splitface.tattoo.exception.service.serviceExceptions.*;
 import com.splitface.tattoo.models.Artist;
 import com.splitface.tattoo.models.Style;
 import com.splitface.tattoo.models.Tattoo;
@@ -68,19 +65,29 @@ public class TattooServiceImpl implements TattooService {
         List<Tattoo> tattoos = new ArrayList<>(getTattoosByArtist(artistId));
         /// design field is using to hold a URL og image
         String tattooURL = tattoo.getDesign();
-        boolean isPresent = false;
-        for (Tattoo ta:tattoos) {
-            if (ta.getDesign().equals(tattooURL)) {
-                isPresent = true;
-                break;
+        if (tattoo.getStyles() != null){
+            List<Style> styles = styleService.getAllStylesFromDB();
+            Outer:
+            for (Style style: tattoo.getStyles()){
+                for (Style s : styles){
+                    if (style.equals(s)){
+                        continue Outer;
+                    }
+                }
+                throw new StyleNotInDatabaseException("Sorry a style you have given is not in our database");
             }
         }
-        if (!isPresent){
-            tattoo.setArtist(artist);
-            tattoo.setTimePosted(Instant.now());
-            tattooRepository.save(tattoo);
-            return tattoo;
-        }else return null;
+
+        for (Tattoo ta:tattoos) {
+            if (ta.getDesign().equals(tattooURL)) {
+                throw new TattooAlreadyAssociatedWithProfileException("Sorry this tattoo is already associated with this account");
+            }
+        }
+        tattoo.setArtist(artist);
+        tattoo.setTimePosted(Instant.now());
+        tattooRepository.save(tattoo);
+        return tattoo;
+
     }
 
     public void deleteTattooById(Long id){
@@ -112,8 +119,10 @@ public class TattooServiceImpl implements TattooService {
         tattooCheck.checkWorkedHours(tattoo.getHoursWorked());
         tattooToUpdate.setPrice(tattoo.getPrice());
         List<Style> allStyles = styleService.getAllStylesFromDB();
-        styleCheck.validateStylesAreInList(tattoo.getStyles(), allStyles);
-        tattooToUpdate.setStyles(tattoo.getStyles());
+        if(allStyles != null && tattoo.getStyles()!= null){
+            styleCheck.validateStylesAreInList(tattoo.getStyles(), allStyles);
+            tattooToUpdate.setStyles(tattoo.getStyles());
+        }
         tattooRepository.save(tattooToUpdate);
     }
 }
