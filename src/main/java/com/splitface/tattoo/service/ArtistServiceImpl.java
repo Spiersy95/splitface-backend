@@ -86,54 +86,32 @@ public class ArtistServiceImpl implements ArtistService {
     public Artist editArtist(Long artistId, Artist newArtist) {
         Artist artistFromDb = artistRepository.findById(artistId)
                 .orElseThrow(()->new ArtistIdDoesNotExistException("no artist with such id"));
-        newArtist.setTattoos(artistFromDb.getTattoos());
 
-        if (isNull(newArtist.getName())){
-            artistFromDb.setName(newArtist.getName());
-        } else if (!artistCheck.checkName(newArtist.getName())) {
-            throw new NameValidatorException("something wrong with name");
+        if (!isNull(newArtist.getName())){
+            if (artistCheck.checkName(newArtist.getName())){
+                artistFromDb.setName(newArtist.getName());
+            }
+        }
+        if (!isNull(newArtist.getLocation())){
+            if(artistCheck.checkPostcode(newArtist.getLocation())){
+                artistFromDb.setLocation(newArtist.getLocation());
+            }
+        }
+        if(!isNull(newArtist.getEmail())){
+            if(artistCheck.checkEmail(newArtist.getEmail())){
+                artistFromDb.setEmail(newArtist.getEmail());
+            }
+        }
+        if(!isNull(newArtist.getPassword())){
+            if(artistCheck.checkPassword(newArtist.getPassword())){
+                PasswordUtils passwordUtils = new PasswordUtils();
+                artistFromDb.setPassword(passwordUtils.hashPassword(newArtist.getPassword()));
+            }
         }
 
-        if (isNull(newArtist.getLocation())){
-            artistFromDb.setLocation(newArtist.getLocation());
-        } else if (!artistCheck.checkPostcode(newArtist.getLocation())) {
-                System.out.println(newArtist.getLocation());
-                throw new PostcodeValidatorException("PostCode validator in action");
-            }
-
-        if (isNull(newArtist.getEmail())){
-            newArtist.setEmail(artistFromDb.getEmail());
-            System.out.println("in if");
-        } else if (!artistCheck.checkEmail(newArtist.getEmail()) || getListOfEmails().contains(newArtist.getEmail())) {
-            System.out.println("in else");
-            throw new EmailValidatorException("Something wrong with email");
-        }
-
-        if (isNull(newArtist.getPassword())){
-            newArtist.setPassword(artistFromDb.getPassword());
-        } else if (artistCheck.checkPassword(newArtist.getPassword())) {
-            PasswordUtils passwordUtils = new PasswordUtils();
-            newArtist.setPassword(passwordUtils.hashPassword(newArtist.getPassword()));
-        }else
-            {
-                throw new PasswordValidatorException("password validator in action");
-            }
-        artistRepository.save(newArtist);
-        return newArtist;
+        artistRepository.save(artistFromDb);
+        return artistFromDb;
     }
-
-//    @Override
-//    public Artist getArtistByTattooId(Long tattooId) {
-//        Tattoo tattoo = tattooRepository.findById(tattooId)
-//                .orElseThrow(()->new TattooIdDoesNotExistException("no this ID"));
-//        System.out.println(" HADFLHBD!!!! "+ (tattoo.getArtist().getId()).getClass().getName());
-//        Long artistId = tattoo.getArtist().getId();
-//
-//        Artist artist = artistRepository.findById(artistId).orElseThrow(()->new RuntimeException("aeg"));
-//        return artist;
-//    }
-
-
 
     @Override
     public List<String> getListOfEmails() {
