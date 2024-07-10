@@ -76,8 +76,8 @@ public class ArtistServiceImpl implements ArtistService {
 
     @Override
     public Artist getArtistByEmail(String email) {
-        Artist artist = new Artist();
-        artist = artistRepository.findArtistByEmail(email);
+
+        Artist artist = artistRepository.findArtistByEmail(email);
         if (isNull(artist)) throw new ArtistIdDoesNotExistException("incorrect email");
         return artist;
     }
@@ -108,7 +108,6 @@ public class ArtistServiceImpl implements ArtistService {
                 artistFromDb.setPassword(passwordUtils.hashPassword(newArtist.getPassword()));
             }
         }
-
         artistRepository.save(artistFromDb);
         return artistFromDb;
     }
