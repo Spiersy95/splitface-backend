@@ -102,8 +102,7 @@ For brevity, in this README we will just focus on the types of request we can ma
 
 - getAllStyles - returns all the valid styles in the database
 
-
-### POSTs
+#### POSTs
 
 - addStyle - add a style to the database
 - addStylesForTattoo - Add a list of new styles to the database for a specific tattoo

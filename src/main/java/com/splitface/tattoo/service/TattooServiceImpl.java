@@ -70,7 +70,8 @@ public class TattooServiceImpl implements TattooService {
             Outer:
             for (Style style: tattoo.getStyles()){
                 for (Style s : styles){
-                    if (style.equals(s)){
+                    if (style.getStyleName().equals(s.getStyleName())){
+                        style.setId(s.getId());
                         continue Outer;
                     }
                 }
